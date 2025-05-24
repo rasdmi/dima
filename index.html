@@ -1,399 +1,184 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Quokka Herding Game</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Дима — портфолио</title>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Patrick+Hand&display=swap');
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      overflow: hidden;
-      background: url("assets/image.png") center center / cover repeat;
-      font-family: sans-serif;
+      padding: 0;
     }
 
-    #score {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 64px;
-      font-weight: bold;
-      color: #222;
-      z-index: 5;
+    body {
+      font-family: 'Comfortaa', sans-serif;
+      background: #fdfaf5 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      color: #2e2e2e;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      min-height: 100vh;
+      background: #f3efe7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 40px 20px;
     }
 
-    #score::after {
-      content: "\Aквок в баре";
-      white-space: pre;
-      display: block;
-      font-size: 24px;
+    header h1 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 2.4rem;
+      margin-bottom: 12px;
     }
 
-    #emojiCount {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      z-index: 6;
-      text-align: center;
+    header h2 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: #4a4a4a;
     }
 
-    #house {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 250px;
-      height: 250px;
-      z-index: 2;
-      transition: transform 0.2s ease;
+    section {
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
     }
 
-    .quokka, .collie {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      z-index: 3;
-      transition: transform 0.2s ease;
-    }
-
-    .emoji {
-      position: absolute;
-      font-size: 24px;
+    section.visible {
       opacity: 1;
-      width: auto;
-      height: auto;
-      z-index: 4;
+      transform: translateY(0);
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 20px;
+      color: #6c6c6c;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .project {
+      background: #fffaf0;
+      border-left: 4px solid #98b49c;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .project h3 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .donate {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .donate button {
+      background-color: #a2c1a2;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Comfortaa', sans-serif;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .project h3 {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<div id="score">0</div>
-<div id="emojiCount"></div>
-<img src="assets/house.png" id="house" alt="House">
-<audio id="burpSound" src="assets/burp.wav"></audio>
+  <header>
+    <h1>Дима — создаю пространства для бережной жизни</h1>
+    <h2>Хор, игры, медиации, творчество и еда</h2>
+  </header>
 
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-<script>
-  const socket = io("http://localhost:3000");
+  <section id="about">
+    <p>
+      Я верю, что мир может быть мягче. Мои проекты — попытка создать пространства, где люди чувствуют себя свободно: без иерархий, насилия и фальши. Люблю джаз, ручной труд и честные разговоры.
+    </p>
+    <p class="quote">"Freedom is not given to us by anyone; we have to cultivate it ourselves." — Thich Nhat Hanh</p>
+  </section>
 
-  let collieIsMoving = false;
-  let collieX = window.innerWidth / 2;
-  let collieY = window.innerHeight / 2;
+  <section id="projects">
+    <h2 style="font-family: 'Patrick Hand', cursive;">Проекты</h2>
+    <div class="projects">
+      <div class="project">
+        <h3>Свободный хор</h3>
+        <p>Поём без нот и суждений, слушаем друг друга и импровизируем вместе.</p>
+      </div>
+      <div class="project">
+        <h3>Детские игры</h3>
+        <p>Игровые форматы без соревнования, где важен процесс и тепло между участниками.</p>
+      </div>
+      <div class="project">
+        <h3>Кухня диалога</h3>
+        <p>Обеды, где люди делятся опытом, готовят вместе и обсуждают важное.</p>
+      </div>
+    </div>
+  </section>
 
-  function sendMoveStart(x, y) {
-    socket.emit("moveStart", { x: Math.round(x), y: Math.round(y) });
-    collieIsMoving = true;
-  }
+  <section id="donate" class="donate">
+    <h2 style="font-family: 'Patrick Hand', cursive;">Как поддержать</h2>
+    <p style="max-width: 500px; margin: 0 auto 20px;">
+      Если вам близко то, что я делаю — можете поддержать донатом. Это поможет арендовать помещение, покупать материалы и кормить участников.
+    </p>
+    <a href="https://ko-fi.com/yourname" target="_blank"><button>Поддержать</button></a>
+  </section>
 
-  function sendMoveEnd(x, y) {
-    socket.emit("moveEnd", { x: Math.round(x), y: Math.round(y) });
-    collieIsMoving = false;
-  }
+  <footer>
+    Не люблю соцсети — пишите на <a href="mailto:example@mail.ru">example@mail.ru</a>
+  </footer>
 
-  window.addEventListener("keydown", () => {
-    if (!collieIsMoving) sendMoveStart(collieX, collieY);
-  });
+  <script>
+    // Плавное появление блоков при скролле
+    const sections = document.querySelectorAll('section');
 
-  window.addEventListener("keyup", () => {
-    if (collieIsMoving) sendMoveEnd(collieX, collieY);
-  });
-
-  let mouseMoveTimer = null;
-  window.addEventListener("mousemove", () => {
-    if (!collieIsMoving) sendMoveStart(collieX, collieY);
-    clearTimeout(mouseMoveTimer);
-    mouseMoveTimer = setTimeout(() => {
-      if (collieIsMoving) sendMoveEnd(collieX, collieY);
-    }, 300);
-  });
-</script>
-
-<script>
-const house = document.getElementById("house");
-const scoreDisplay = document.getElementById("score");
-const emojiCounter = document.getElementById("emojiCount");
-const burpSound = document.getElementById("burpSound");
-
-let score = 0;
-const emojiStats = {};
-const quokkas = [];
-
-const houseImages = [
-  "assets/house.png",
-  "assets/house1.png",
-  "assets/house2.png",
-  "assets/house3.png",
-  "assets/house4.png",
-  "assets/house5.png"
-];
-
-const collie = document.createElement("img");
-collie.className = "collie";
-collie.src = "assets/collie_down.png";
-document.body.appendChild(collie);
-
-let targetX = collieX;
-let targetY = collieY;
-let keysPressed = {};
-let lastCollieSwitch = 0;
-
-addEventListener("keydown", e => keysPressed[e.key] = true);
-addEventListener("keyup", e => keysPressed[e.key] = false);
-addEventListener("mousemove", e => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-});
-
-const quokkaImgs = {
-  up: "quokka_up.png",
-  down: "quokka_down.png",
-  left: "quokka_left.png",
-  right: "quokka_right.png"
-};
-
-const minDistToEdge = 40;
-const minSeparation = 40;
-const dogReactionRange = 250 * 0.66;
-const directionChangeInterval = 2000;
-const edibleEmojis = ["🍎", "🍌", "🍇", "🍓", "🍉", "🍍", "🍑", "🍒", "🍺"];
-
-function spawnQuokka() {
-  const q = document.createElement("img");
-  q.className = "quokka";
-  q.src = "assets/quokka_down.png";
-  q.style.left = Math.random() * (window.innerWidth - 160) + 80 + "px";
-  q.style.top = Math.random() * (window.innerHeight - 160) + 80 + "px";
-  document.body.appendChild(q);
-  quokkas.push({
-    el: q,
-    x: parseFloat(q.style.left),
-    y: parseFloat(q.style.top),
-    vx: Math.random() * 2 - 1,
-    vy: Math.random() * 2 - 1,
-    lastDirChange: Date.now()
-  });
-}
-
-for (let i = 0; i < 15; i++) spawnQuokka();
-
-function updateEmojiCounter() {
-  emojiCounter.textContent = Object.entries(emojiStats).map(([e, c]) => `${e} ${c}`).join("  ");
-}
-
-function spawnEmoji() {
-  const emoji = document.createElement("div");
-  emoji.className = "emoji";
-  const type = edibleEmojis[Math.floor(Math.random() * edibleEmojis.length)];
-  emoji.textContent = type;
-  emoji.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  emoji.style.top = window.innerHeight + "px";
-  document.body.appendChild(emoji);
-
-  let y = window.innerHeight;
-  const interval = setInterval(() => {
-    y -= 2;
-    emoji.style.top = y + "px";
-    const collieRect = collie.getBoundingClientRect();
-    const emojiRect = emoji.getBoundingClientRect();
-    if (
-      emojiRect.left < collieRect.right &&
-      emojiRect.right > collieRect.left &&
-      emojiRect.top < collieRect.bottom &&
-      emojiRect.bottom > collieRect.top
-    ) {
-      clearInterval(interval);
-      emoji.remove();
-      emojiStats[type] = (emojiStats[type] || 0) + 1;
-      updateEmojiCounter();
-      spawnQuokka();
-      return;
-    }
-    if (y <= window.innerHeight / 2) {
-      clearInterval(interval);
-      emoji.remove();
-    }
-  }, 30);
-}
-
-setInterval(() => {
-  const count = 1 + Math.floor(Math.random() * 3);
-  for (let i = 0; i < count; i++) spawnEmoji();
-}, 1000);
-
-function animate() {
-  const now = Date.now();
-  let dx = 0, dy = 0;
-
-  if (keysPressed["ArrowLeft"] || keysPressed["a"]) dx = -1;
-  if (keysPressed["ArrowRight"] || keysPressed["d"]) dx = 1;
-  if (keysPressed["ArrowUp"] || keysPressed["w"]) dy = -1;
-  if (keysPressed["ArrowDown"] || keysPressed["s"]) dy = 1;
-
-  if (dx !== 0 || dy !== 0) {
-    const len = Math.sqrt(dx * dx + dy * dy);
-    collieX += (dx / len) * 5;
-    collieY += (dy / len) * 5;
-  } else {
-    const mx = targetX - collieX;
-    const my = targetY - collieY;
-    const dist = Math.sqrt(mx * mx + my * my);
-    if (dist > 1) {
-      collieX += mx / dist * 5;
-      collieY += my / dist * 5;
-    }
-  }
-
-  if (now - lastCollieSwitch > 500) {
-    lastCollieSwitch = now;
-    const cx = targetX - collieX;
-    const cy = targetY - collieY;
-    collie.src = Math.abs(dx || cx) > Math.abs(dy || cy)
-      ? ((dx || cx) > 0 ? "assets/collie_left.png" : "assets/collie_right.png")
-      : ((dy || cy) > 0 ? "assets/collie_down.png" : "assets/collie_up.png");
-  }
-
-  collie.style.left = collieX + "px";
-  collie.style.top = collieY + "px";
-
-  for (let i = quokkas.length - 1; i >= 0; i--) {
-    const q = quokkas[i];
-    const cx = collieX - q.x;
-    const cy = collieY - q.y;
-    const d = Math.sqrt(cx * cx + cy * cy);
-    const isScared = d < dogReactionRange;
-
-    if (!isScared && now - q.lastDirChange > directionChangeInterval) {
-      q.vx = (Math.random() - 0.5) * 4;
-      q.vy = (Math.random() - 0.5) * 4;
-      q.lastDirChange = now;
-    } else if (isScared) {
-      q.vx -= cx / d * 0.5;
-      q.vy -= cy / d * 0.5;
-    }
-
-    for (let j = 0; j < quokkas.length; j++) {
-      if (i !== j) {
-        const other = quokkas[j];
-        const ox = q.x - other.x;
-        const oy = q.y - other.y;
-        const od = Math.sqrt(ox * ox + oy * oy);
-        if (od < minSeparation && od > 0) {
-          q.vx += ox / od * 0.3;
-          q.vy += oy / od * 0.3;
-        } else if (!isScared && od < 200) {
-          q.vx -= ox / od * 0.05;
-          q.vy -= oy / od * 0.05;
+    function revealOnScroll() {
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          sec.classList.add('visible');
         }
-      }
+      });
     }
 
-    q.vx *= 0.95;
-    q.vy *= 0.95;
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
 
-    q.x += q.vx;
-    q.y += q.vy;
-
-    q.x = Math.max(minDistToEdge, Math.min(window.innerWidth - 80 - minDistToEdge, q.x));
-    q.y = Math.max(minDistToEdge, Math.min(window.innerHeight - 80 - minDistToEdge, q.y));
-
-    q.el.style.left = q.x + "px";
-    q.el.style.top = q.y + "px";
-
-    q.el.src = Math.abs(q.vx) > Math.abs(q.vy)
-      ? (q.vx > 0 ? "assets/" + quokkaImgs.right : "assets/" + quokkaImgs.left)
-      : (q.vy > 0 ? "assets/" + quokkaImgs.down : "assets/" + quokkaImgs.up);
-
-    const houseRect = house.getBoundingClientRect();
-    const qRect = q.el.getBoundingClientRect();
-    if (
-      qRect.left < houseRect.right &&
-      qRect.right > houseRect.left &&
-      qRect.top < houseRect.bottom &&
-      qRect.bottom > houseRect.top
-    ) {
-      burpSound.currentTime = 0;
-      burpSound.play();
-      house.style.transform = "translateX(-50%) scale(1.3)";
-      setTimeout(() => house.style.transform = "translateX(-50%) scale(1)", 200);
-      q.el.style.transform = "scale(0)";
-      setTimeout(() => q.el.remove(), 200);
-      quokkas.splice(i, 1);
-      score++;
-      scoreDisplay.textContent = score;
-
-      // Рандомная смена домика каждые 10 квок
-      
-      if (score % 10 === 0) {
-        let currentSrc = house.src.split('/').pop(); // Получаем имя файла без пути
-        let newHouse;
-        do {
-          newHouse = houseImages[Math.floor(Math.random() * houseImages.length)];
-        } while (newHouse.includes(currentSrc)); // Сравниваем только имена файлов
-        house.src = newHouse;
-      }
-    
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-<script>
-  const otherPlayers = {};
-  
-  socket.on("init", ({ id, players }) => {
-    console.log("INIT received", players);
-    for (const [playerId, pos] of Object.entries(players)) {
-      if (playerId !== id) {
-        addOtherPlayer(playerId, pos.x, pos.y);
-      }
-    }
-  });
-  
-  socket.on("newPlayer", ({ id, x, y }) => {
-    console.log("New player joined:", id);
-    addOtherPlayer(id, x, y);
-  });
-  
-  socket.on("playerMoved", ({ id, x, y }) => {
-    const player = otherPlayers[id];
-    if (player) {
-      player.style.left = x + "px";
-      player.style.top = y + "px";
-    }
-  });
-  
-  socket.on("playerStopped", ({ id, x, y }) => {
-    const player = otherPlayers[id];
-    if (player) {
-      player.style.left = x + "px";
-      player.style.top = y + "px";
-    }
-  });
-  
-  socket.on("playerLeft", (id) => {
-    if (otherPlayers[id]) {
-      otherPlayers[id].remove();
-      delete otherPlayers[id];
-    }
-  });
-  
-  function addOtherPlayer(id, x, y) {
-    const player = document.createElement("img");
-    player.src = "assets/collie_right.png";
-    player.className = "collie";
-    player.style.left = x + "px";
-    player.style.top = y + "px";
-    player.style.border = "2px solid red"; // 👈 чтобы выделить других
-    document.body.appendChild(player);
-    otherPlayers[id] = player;
-  }
-  </script>  
 </body>
 </html>
