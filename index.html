@@ -3,182 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Дима — портфолио</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Patrick+Hand&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Comfortaa', sans-serif;
-      background: #fdfaf5 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-      color: #2e2e2e;
-      line-height: 1.6;
-      padding: 0;
-      margin: 0;
-    }
-
-    header {
-      min-height: 100vh;
-      background: #f3efe7;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    header h1 {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 2.4rem;
-      margin-bottom: 12px;
-    }
-
-    header h2 {
-      font-size: 1.2rem;
-      font-weight: normal;
-      color: #4a4a4a;
-    }
-
-    section {
-      padding: 60px 20px;
-      max-width: 800px;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.8s ease-out;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .quote {
-      font-style: italic;
-      margin-top: 20px;
-      color: #6c6c6c;
-    }
-
-    .projects {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .project {
-      background: #fffaf0;
-      border-left: 4px solid #98b49c;
-      padding: 16px;
-      border-radius: 8px;
-    }
-
-    .project h3 {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-    }
-
-    .donate {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .donate button {
-      background-color: #a2c1a2;
-      color: white;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: 'Comfortaa', sans-serif;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      .project h3 {
-        font-size: 1.2rem;
-      }
-    }
-  </style>
+  <title>Реджио-детский сад «Стихия»</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
   <header>
-    <h1>Дима — создаю пространства для бережной жизни</h1>
-    <h2>Хор, игры, медиации, творчество и еда</h2>
+    <h1>Реджио-детский сад «Стихия»</h1>
+    <p>Место, где ребёнок — главный исследователь</p>
   </header>
 
-  <section id="about">
-    <p>
-      Я верю, что мир может быть мягче. Мои проекты — попытка создать пространства, где люди чувствуют себя свободно: без иерархий, насилия и фальши. Люблю джаз, ручной труд и честные разговоры.
-    </p>
-    <p class="quote">"Freedom is not given to us by anyone; we have to cultivate it ourselves." — Thich Nhat Hanh</p>
-  </section>
-
-  <section id="projects">
-    <h2 style="font-family: 'Patrick Hand', cursive;">Проекты</h2>
-    <div class="projects">
-      <div class="project">
-        <h3>Свободный хор</h3>
-        <p>Поём без нот и суждений, слушаем друг друга и импровизируем вместе.</p>
-      </div>
-      <div class="project">
-        <h3>Детские игры</h3>
-        <p>Игровые форматы без соревнования, где важен процесс и тепло между участниками.</p>
-      </div>
-      <div class="project">
-        <h3>Кухня диалога</h3>
-        <p>Обеды, где люди делятся опытом, готовят вместе и обсуждают важное.</p>
+  <section class="section" id="about">
+    <div class="about">
+      <img src="about-us-2.png" alt="Дети занимаются творчеством">
+      <div class="text">
+        <h2>О нас</h2>
+        <p>Наш подход родом из Италии. Здесь каждый ребёнок — творец, исследователь и участник образовательного процесса.</p>
+        <ul>
+          <li>Средовая педагогика и проектная деятельность</li>
+          <li>Принцип «100 языков ребёнка»</li>
+          <li>Мягкая адаптация и сопровождение родителей</li>
+        </ul>
+        <a href="#contacts" class="btn">Связаться с нами</a>
       </div>
     </div>
   </section>
 
-  <section id="donate" class="donate">
-    <h2 style="font-family: 'Patrick Hand', cursive;">Как поддержать</h2>
-    <p style="max-width: 500px; margin: 0 auto 20px;">
-      Если вам близко то, что я делаю — можете поддержать донатом. Это поможет арендовать помещение, покупать материалы и кормить участников.
-    </p>
-    <a href="https://ko-fi.com/yourname" target="_blank"><button>Поддержать</button></a>
-  </section>
-
   <footer>
-    Не люблю соцсети — пишите на <a href="mailto:example@mail.ru">example@mail.ru</a>
+    Стихия © 2025. Все права защищены.
   </footer>
-
-  <script>
-    // Плавное появление блоков при скролле
-    const sections = document.querySelectorAll('section');
-
-    function revealOnScroll() {
-      sections.forEach(sec => {
-        const rect = sec.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 80) {
-          sec.classList.add('visible');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
-  </script>
-
 </body>
 </html>
