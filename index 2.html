@@ -1,1 +1,310 @@
-<!-- HTML content will be added here -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Стихия — реджио-детский сад</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --beige: #e2d7ba;
+      --sand: #beb395;
+      --tan: #cec2ac;
+      --light: #eff1f3;
+      --brown: #917767;
+      --dark: #232529;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--tan);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar .logo {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: bold;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.5);
+    }
+
+    .overlay-logo {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .overlay-logo img {
+      max-width: 300px;
+    }
+
+    .section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .about-text {
+      flex: 1 1 50%;
+    }
+
+    .about-img {
+      flex: 1 1 40%;
+    }
+
+    .about-img img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .gallery-grid,
+    .team-grid,
+    .extras-grid,
+    .price-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .price-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .extras-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .extra-block img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .contacts {
+      background: var(--dark);
+      color: white;
+    }
+
+    .contacts a {
+      color: var(--beige);
+    }
+
+    .contacts-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .contacts-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .about {
+        flex-direction: row;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Навигация -->
+  <nav class="topbar">
+    <img src="media/logo-no.png" alt="Стихия логотип" class="logo" />
+    <ul class="nav-links">
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#team">Наша команда</a></li>
+      <li><a href="#prices">Наши цены</a></li>
+      <li><a href="#extras">Допы</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Видеоблок -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="media/back.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay-logo">
+      <img src="media/logo.png" alt="Стихия логотип цветной" />
+    </div>
+  </section>
+
+  <!-- О нас -->
+  <section id="about" class="section about">
+    <div class="about-text">
+      <h2>Реджио-детский сад</h2>
+      <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия... [и далее по тексту]</p>
+      <ul>
+        <li>Гуманный подход</li>
+        <li>Средовая педагогика</li>
+        <li>Педагогика слушания</li>
+        <li>100 языков ребёнка</li>
+        <li>Проектирование и организация</li>
+        <li>Кооперация и работа в группах</li>
+        <li>Рефлексия</li>
+        <li>Креативное мышление и Soft-skills</li>
+      </ul>
+    </div>
+    <div class="about-img">
+      <img src="media/about.png" alt="О нас" />
+      <!-- Тут можно разместить декоративные круги CSS -->
+    </div>
+  </section>
+
+  <!-- Наши моменты -->
+  <section class="gallery">
+    <h2>Наши моменты</h2>
+    <div class="grid gallery-grid">
+      <img src="media/block1.jpg" />
+      <img src="media/block2.jpg" />
+      <img src="media/block3.jpg" />
+      <img src="media/block4.jpg" />
+      <img src="media/block5.jpg" />
+      <img src="media/block6.jpg" />
+      <img src="media/block7.jpg" />
+      <img src="media/block8.jpg" />
+      <img src="media/block9.jpg" />
+    </div>
+  </section>
+
+  <!-- Команда -->
+  <section id="team" class="section team">
+    <h2>Наша команда</h2>
+    <p>Любовь во всём, что мы делаем... [текст про команду]</p>
+    <div class="grid team-grid">
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+      <img src="media/olya.jpg" />
+    </div>
+    <div class="bio">
+      <h3>Оля — Основатель и руководитель проекта</h3>
+      <p>Рожнова Ольга... [биография]</p>
+    </div>
+  </section>
+
+  <!-- Цены -->
+  <section id="prices" class="section prices">
+    <h2>Наши цены</h2>
+    <p>Наличие свободных мест и актуальные цены... [и далее по структуре]</p>
+    <div class="price-grid">
+      <div><h3>3 РАЗА В НЕДЕЛЮ</h3><p>₽33 000 / месяц<br>Полный день</p></div>
+      <div><h3>4 РАЗА В НЕДЕЛЮ</h3><p>₽38 000 / месяц<br>Полный день</p></div>
+      <div><h3>5 РАЗ В НЕДЕЛЮ</h3><p>₽45 500 / месяц<br>Полный день</p></div>
+      <div><h3>ЕЖЕДНЕВНОЕ</h3><p>₽31 500 / месяц<br>Полдня</p></div>
+    </div>
+  </section>
+
+  <!-- Дополнительные занятия -->
+  <section id="extras" class="section extras">
+    <h2>Дополнительные занятия и мероприятия</h2>
+    <div class="extras-grid">
+      <div class="extra-block">
+        <img src="media/toddler2.png" />
+        <h3>Группы для тоддлеров</h3>
+        <p>Каждую субботу с 10.00 до 12.00... [и далее]</p>
+      </div>
+      <div class="extra-block">
+        <img src="media/holiday.png" />
+        <h3>Группа ГКП 2-3 года</h3>
+        <p>2,5 часа пребывания 3 раза в неделю... [и далее]</p>
+      </div>
+      <div class="extra-block">
+        <img src="media/camp3.png" />
+        <h3>Летний лагерь</h3>
+        <p>С 30 мая по 31 августа... [и далее]</p>
+      </div>
+      <div class="extra-block">
+        <img src="media/parents2.jpg" />
+        <h3>Для родителей</h3>
+        <p>Приглашение на встречи, тренинги и мастер-классы... [и далее]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section id="contacts" class="section contacts">
+    <h2>Контакты</h2>
+    <div class="contacts-content">
+      <div class="contacts-info">
+        <p>ул. Александры Монаховой, 94, корп. 4</p>
+        <p>Пн-Пт: 8:30 - 18:30<br>Сб: 10:00 - 15:30</p>
+        <p><img src="media/icon-phone.svg" /> +7 (916) 196-4999</p>
+        <p><img src="media/icon-tg.svg" /> <a href="https://t.me/+79161964999">Telegram</a></p>
+        <p><img src="media/icon-vk.svg" /> <a href="https://vk.com/public211383023">VK</a></p>
+        <p><img src="media/icon-ig.svg" /> <a href="https://instagram.com/reggio_stihiya">Instagram</a></p>
+      </div>
+      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.481776%2C55.540934&mode=poi&poi%5Bpoint%5D=37.479997%2C55.541190&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D131481280050&z=16.68" width="100%" height="300" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>Стихия © 2025</p>
+  </footer>
+</body>
+</html>
