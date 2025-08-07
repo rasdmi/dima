@@ -253,7 +253,38 @@
       max-width: 100%;
       border-radius: 8px;
     }
-  
+    .gallery-wavy {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-top,
+.wave-bottom {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wave-top {
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.wave-bottom {
+  bottom: 0;
+  transform: translateY(100%);
+}
+
+.gallery.section {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 80px 20px;
+}
+
     @media (max-width: 768px) {
       .gallery-grid-custom {
         grid-template-columns: repeat(2, 1fr);
@@ -285,7 +316,7 @@
       <li><a href="#contacts">Контакты</a></li>
     </ul>
   </nav>
-  <div style="height: 2px; background-color: #c7baa1;"></div>
+  <div style="height: 15px; background-color: #bbb092;"></div>
 
   <!-- Видеоблок -->
   <section class="hero">
@@ -328,20 +359,35 @@
 
   <!-- Наши моменты -->
   <!-- Наши моменты -->
-<section class="gallery section" style="background: white;">
-  <h2>Наши моменты</h2>
-  <p>Мы фиксируем каждый важный момент... [текст по желанию]</p>
-  <div class="team-grid">
-    <img src="media/block1.jpg" />
-    <img src="media/block2.jpg" />
-    <img src="media/block3.jpg" />
-    <img src="media/block4.jpg" />
-    <img src="media/block5.jpg" />
-    <img src="media/block6.jpg" />
-    <img src="media/block7.jpg" />
-    <img src="media/block8.jpg" />
-  </div>
-</section>
+  <section class="gallery-wavy">
+    <div class="wave-top">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,64 C360,120 1080,0 1440,80 L1440,0 L0,0 Z" fill="#f6f6f6" />
+      </svg>
+    </div>
+  
+    <div class="gallery section" style="background: #f6f6f6;">
+      <h2>Моменты<br><strong>Жизнь в садике</strong></h2>
+      <p>«Обсуждая с мужем пришли к выводу, что это лучшее место куда мог попасть наш ребёнок». Александра (мама Камиля).</p>
+      <div class="team-grid">
+        <img src="media/block1.jpg" />
+        <img src="media/block2.jpg" />
+        <img src="media/block3.jpg" />
+        <img src="media/block4.jpg" />
+        <img src="media/block5.jpg" />
+        <img src="media/block6.jpg" />
+        <img src="media/block7.jpg" />
+        <img src="media/block8.jpg" />
+      </div>
+    </div>
+  
+    <div class="wave-bottom">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,32 C480,120 960,0 1440,64 L1440,100 L0,100 Z" fill="#917767" />
+      </svg>
+    </div>
+  </section>
+  
 
   <!-- Команда -->
   <section id="team" class="section team">

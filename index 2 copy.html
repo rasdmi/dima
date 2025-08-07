@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Стихия — семейное пространство</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --beige: #e2d7ba;
+      --light-beige: #f6f6f6;
+      --sand: #beb395;
+      --tan: #cec2ac;
+      --brown: #917767;
+      --dark: #232529;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--light-beige);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--beige);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .hero {
+      position: relative;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: white;
+    }
+
+    .hero video, .hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero .overlay {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .wavy {
+      position: relative;
+      background: white;
+      padding: 100px 20px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .wave-top svg,
+    .wave-bottom svg {
+      display: block;
+      width: 100%;
+      height: 100px;
+    }
+
+    .wave-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .wave-bottom {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .grid-4 img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .prices {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .price-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .contact {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    footer {
+      background: #2c2c2c;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .grid-4, .prices, .contact {
+        grid-template-columns: 1fr;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><img src="logo.svg" alt="Логотип" height="40" /></div>
+    <nav>
+      <ul>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#gallery">Моменты</a></li>
+        <li><a href="#team">Команда</a></li>
+        <li><a href="#prices">Цены</a></li>
+        <li><a href="#extras">Дополнительно</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+    <div>+7 (916) 196-4999</div>
+  </header>
+
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="media/back.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay">
+      <img src="media/logo.png" alt="Стихия логотип" width="250" />
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>Реджио–детский сад</h2>
+    <p>Текст об образовательном подходе...</p>
+  </section>
+
+  <section id="gallery" class="wavy">
+    <div class="wave-top">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,64 C360,120 1080,0 1440,80 L1440,0 L0,0 Z" fill="#f6f6f6" /></svg>
+    </div>
+    <h2>Жизнь в садике</h2>
+    <p>Описание от родителей...</p>
+    <div class="grid-4">
+      <img src="media/block1.jpg" />
+      <img src="media/block2.jpg" />
+      <img src="media/block3.jpg" />
+      <img src="media/block4.jpg" />
+    </div>
+    <div class="wave-bottom">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,32 C480,120 960,0 1440,64 L1440,100 L0,100 Z" fill="#917767" /></svg>
+    </div>
+  </section>
+
+  <section id="team">
+    <h2>Наша команда</h2>
+    <p>Описание и слайдер с фото...</p>
+  </section>
+
+  <section id="prices" class="wavy" style="background: #917767; color: white;">
+    <div class="wave-top">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,64 C360,0 1080,160 1440,100 L1440,0 L0,0 Z" fill="#f6f6f6" /></svg>
+    </div>
+    <h2>Стоимость посещения</h2>
+    <div class="prices">
+      <div class="price-card">
+        <h3>3 дня</h3>
+        <p>33 000 ₽</p>
+      </div>
+      <div class="price-card">
+        <h3>4 дня</h3>
+        <p>38 000 ₽</p>
+      </div>
+      <div class="price-card">
+        <h3>5 дней</h3>
+        <p>45 500 ₽</p>
+      </div>
+      <div class="price-card">
+        <h3>Полдня</h3>
+        <p>31 500 ₽</p>
+      </div>
+    </div>
+    <div class="wave-bottom">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,32 C480,120 960,0 1440,64 L1440,100 L0,100 Z" fill="#f6f6f6" /></svg>
+    </div>
+  </section>
+
+  <section id="extras">
+    <h2>Дополнительные занятия</h2>
+    <div class="grid-4">
+      <img src="media/toddler.jpg" />
+      <img src="media/group2.jpg" />
+      <img src="media/camp.jpg" />
+      <img src="media/parents.jpg" />
+    </div>
+  </section>
+
+  <section id="contacts">
+    <h2>Контактная информация</h2>
+    <div class="contact">
+      <div>
+        <p>ул. Александры Монаховой, 94, корп. 4</p>
+        <p>Пн-Пт: 8:30–18:30</p>
+        <p>Сб: 10:00–15:30</p>
+      </div>
+      <div>
+        <p>Telegram | VK | Instagram</p>
+        <p>+7 (916) 196-4999</p>
+      </div>
+      <div style="flex: 1 1 100%; margin-top: 2rem;">
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=37.481776%2C55.540934&z=16" width="100%" height="300" frameborder="0"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Стихия © 2025</p>
+  </footer>
+</body>
+</html>
