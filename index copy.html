@@ -1,357 +1,291 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ру">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Стихия — реджио-детский сад</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --beige:#e2d7ba; --sand:#beb395; --tan:#cec2ac; --light:#f6f6f6;
-  --brown:#917767; --dark:#232529; --text:#4b4f56;
-  --container:1200px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:#fff; color:var(--dark); line-height:1.65;
-}
-img{max-width:100%; display:block}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>СТИХИЯ — детский сад</title>
+  <meta name="color-scheme" content="light only" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --beige:#e2d7ba;  /* верхняя крупная полоса */
+      --sand:#bab193;   /* нижняя тонкая полоса */
+      --brown:#917767;  /* фирменный тёплый */
+      --text:#777777;   /* ГЛОБАЛЬНЫЙ цвет текста */
+      --white:#ffffff;
+      --soft:#eff1f3;   /* фон блока Жизнь */
+    }
 
-/* Top bar (узкая бежевый штрих сверху) */
-.topbar{height:15px;background:#bbb092}
+    /* Сброс и базовые */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--text);background:#fff}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
 
-/* Header / Hero */
-.header{
-  position:relative; height:88vh; min-height:520px; overflow:hidden;
-  background:#000;
-}
-.header video,.header .bg{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.55)
-}
-.header .logo-wrap{
-  position:relative; z-index:2; height:100%; display:flex; align-items:center; justify-content:center;
-}
-.header .logo-wrap img{width:min(48vw,360px)}
-/* волнистый низ шапки */
-.header .wave-bottom{position:absolute; left:0; right:0; bottom:-1px}
-.header .wave-bottom svg{display:block; width:100%; height:auto}
+    .container{max-width:1200px;margin-inline:auto;padding:0 20px}
 
-/* Общие контейнеры/заголовки */
-.section{padding:72px 20px; position:relative}
-.container{max-width:var(--container); margin:0 auto}
-.h2{font-size:32px; font-weight:800; margin-bottom:18px; letter-spacing:.2px}
-.h2 small{display:block; font-weight:700; color:#666; font-size:16px; margin-bottom:6px}
-.lead{color:#5b5b5b}
+    /* Верхняя полоса с НАВИГАЦИЕЙ */
+    .top-band{background:var(--beige)}
+    .top-band .nav{display:flex;align-items:center;gap:16px;min-height:96px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    /* Увеличили logo-no.png в 3 раза */
+    .brand img.icon{width:84px;height:84px;object-fit:contain}
+    /* Вместо текста — картинка log.png */
+    .brand img.wordmark{height:34px;width:auto}
 
-/* About */
-.about{background:#fff}
-.about .wrap{display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:start}
-.about .figure{position:relative; width:100%; max-width:420px}
-.about .figure img{border-radius:50%}
-.about .c1,.about .c2,.about .c3{position:absolute;border-radius:50%}
-.about .c1{inset:-3% -3% 0 0;background:var(--sand); z-index:0}
-.about .c2{inset:-9% -9% 0 0;background:var(--tan); z-index:-1}
-.about .c3{width:14px;height:14px;left:22px;bottom:12px;background:var(--brown);border:2px solid #fff}
+    .spacer{flex:1}
+    .nav-links{display:flex;align-items:center;gap:18px}
+    .nav-links a{padding:10px 12px;border-radius:10px;font-weight:600;line-height:1}
+    .nav-links a:hover{background:rgba(0,0,0,.05)}
 
-.about .text h3{font-size:26px; font-weight:800; margin-bottom:10px}
-.about .text p{color:var(--text); margin-bottom:12px}
-.about .text ul{margin:14px 0 18px 1.2rem; color:var(--text)}
-.about .cta{display:inline-block; background:var(--sand); color:#fff; font-weight:700;
-  padding:10px 18px; border-radius:8px; text-decoration:none; transition:.2s}
-.about .cta:hover{background:var(--brown)}
+    /* Бургер на мобиле */
+    .burger{display:none;border:0;background:transparent;padding:10px;margin:-10px}
+    .burger span{display:block;width:24px;height:2px;background:#3a3a3a;margin:5px 0}
 
-/* Моменты / Галерея с волнами */
-.gallery-band{background:var(--light); padding:72px 0}
-.gallery-band .wave-top,.gallery-band .wave-bottom{
-  position:absolute; left:0; right:0; height:auto; width:100%; pointer-events:none
-}
-.gallery-band .wave-top{top:-1px; transform:translateY(-100%)}
-.gallery-band .wave-bottom{bottom:-1px; transform:translateY(100%)}
-.gallery-band .title{text-align:center}
-.gallery-band .title .h2{margin-bottom:8px}
-.gallery-band .title p{color:#6a6f77}
-.gallery-row{
-  margin:26px auto 0; max-width:980px; display:grid; grid-template-columns:repeat(8,1fr); gap:10px;
-}
-.gallery-row img{border-radius:10px; width:100%; aspect-ratio:1/1; object-fit:cover}
+    @media (max-width:880px){
+      .nav-links{display:none}
+      .burger{display:block}
+      .brand img.wordmark{height:26px}
+    }
 
-/* Команда — коричневый блок с цитатой */
-.team-hero{
-  background:var(--brown); color:#fff; padding:84px 0; text-align:center; position:relative
-}
-.team-hero .quote{max-width:680px; margin:0 auto 18px; opacity:.9}
-.team-hero .photo-strip{max-width:760px; margin:18px auto 0; border-radius:14px; overflow:hidden}
-.team-grid{
-  display:grid; grid-template-columns:repeat(8,1fr); gap:18px; margin-top:24px; justify-items:center
-}
-.team-grid img{width:120px; height:120px; border-radius:50%; object-fit:cover}
-.team-bio{max-width:760px; margin:24px auto 0; text-align:center; color:#333}
+    /* Нижняя полоса в 3 раза тоньше */
+    .nav-band{background:var(--sand);height:18px;border-bottom:1px solid rgba(0,0,0,.06)}
 
-/* Прайсы */
-.prices{background:#fff; text-align:center}
-.cards{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:18px
-}
-.card{
-  border:2px solid var(--tan); border-radius:14px; padding:22px 16px; background:#fff
-}
-.card h4{font-weight:800; font-size:14px; letter-spacing:.6px; color:#6a645a}
-.card p{margin-top:8px; font-size:18px}
-.card .btn{margin-top:12px; display:inline-block; padding:10px 14px; border-radius:10px;
-  background:#232529; color:#fff; text-decoration:none; font-weight:700}
-.card .btn.alt{background:#b6aa93}
+    /* Мобильное меню */
+    .mobile-menu{display:none;background:var(--beige);border-top:1px solid rgba(0,0,0,.06)}
+    .mobile-menu.open{display:block}
+    .mobile-menu .menu-inner{display:grid;gap:6px;padding:10px 20px}
+    .mobile-menu a{padding:10px 14px;border-radius:12px;font-weight:600}
+    .mobile-menu a:hover{background:rgba(0,0,0,.05)}
 
-/* Текстовый блок (FAQ/описание) */
-.textwide{background:#fff}
-.textwide .inner{max-width:900px; margin:0 auto; color:#5a5f66; font-size:15px}
-.textwide .inner p{margin:10px 0}
+    /* HERO с видео-фоном на весь экран */
+    .hero{position:relative;isolation:isolate;min-height:100svh}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+    .hero::after{ /* затемнение */
+      content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.42));z-index:-1
+    }
+    .hero-inner{position:relative;display:grid;place-items:center;min-height:100svh;padding:80px 20px}
 
-/* Галерея 2 колонки крупных карточек */
-.grid-photos{
-  background:var(--light); padding:64px 0
-}
-.grid2{max-width:980px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:22px}
-.grid2 .tile{background:#fff; border-radius:10px; overflow:hidden}
-.grid2 .tile img{width:100%; height:360px; object-fit:cover}
-.grid2 .tile .cap{padding:10px 14px; font-size:14px; color:#555}
+    .big-logo{max-width:min(640px,80vw);filter:drop-shadow(0 6px 20px rgba(0,0,0,.25))}
 
-/* Тёмный футер с 2 картами и контактами */
-.footer{
-  background:#131417; color:#eaeaea; padding:38px 0 26px
-}
-.footer .block{max-width:1180px; margin:0 auto 28px}
-.footer .map{display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:start; background:#0e0f11; padding:16px; border-radius:12px}
-.footer iframe{width:100%; height:220px; border:0; border-radius:10px}
-.contacts{
-  display:grid; gap:10px; font-size:14px
-}
-.contacts .line{display:flex; align-items:center; gap:8px; opacity:.9}
-.contacts a{color:#fff; text-decoration:none}
-.copy{opacity:.6; text-align:center; font-size:13px; margin-top:10px}
+    /* Полосы/волны: нижняя — белая, над ней — серая полупрозрачная */
+    .waves{position:absolute;left:0;right:0;bottom:-1px;height:200px;pointer-events:none}
+    .waves svg{width:100%;height:100%;display:block}
 
-/* Waves SVG colors adjustment */
-svg{display:block}
+    /* Секция "О нас" */
+    section{scroll-margin-top:90px}
+    .about{padding:72px 20px}
+    .about .wrap{display:grid;grid-template-columns:520px 1fr;gap:40px;align-items:center}
+    .about .title{font-weight:700;letter-spacing:.08em;color:var(--#e1d4c9);text-transform:uppercase;margin:0 0 10px;font-size:clamp(16px,2.3vw,18px)}
+    .about .subtitle{font-weight:800;color:var(--#e1d4c9);margin:0 0 22px;font-size:clamp(28px,4vw,42px)}
 
-/* Responsive */
-@media (max-width:1100px){
-  .about .wrap{grid-template-columns:360px 1fr}
-  .team-grid{grid-template-columns:repeat(4,1fr)}
-  .cards{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:820px){
-  .header{height:64vh}
-  .about .wrap{grid-template-columns:1fr; gap:26px; justify-items:center}
-  .gallery-row{grid-template-columns:repeat(4,1fr)}
-  .team-grid{grid-template-columns:repeat(4,1fr)}
-  .grid2{grid-template-columns:1fr}
-  .footer .map{grid-template-columns:1fr}
-}
-@media (max-width:520px){
-  .h2{font-size:26px}
-  .gallery-row{grid-template-columns:repeat(2,1fr)}
-  .team-grid{grid-template-columns:repeat(2,1fr)}
-  .cards{grid-template-columns:1fr}
-  .grid2 .tile img{height:240px}
-}
-</style>
+    .about .text{max-width:62ch;margin:0;text-align:left}
+    .about .text p{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);margin:0 0 16px}
+    .about .text ul{list-style:none;padding:0;margin:10px 0 0}
+    .about .text li{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);padding-left:18px;position:relative;margin:6px 0}
+    .about .text li::before{content:"–";position:absolute;left:0;top:0}
+
+    .photo-wrap{position:relative}
+    .photo{border-radius:16px;overflow:hidden}
+
+    .dot{position:absolute;border-radius:999px;will-change:transform}
+    .dot.r1{width:14px;height:14px;border:2px solid var(--brown);top:-10px;left:18px}
+    .dot.r2{width:16px;height:16px;border:2px solid var(--brown);right:-10px;top:40%}
+    .dot.r3{width:12px;height:12px;border:2px solid var(--brown);bottom:-12px;left:35%}
+    .dot.f1{width:18px;height:18px;background:rgba(145,119,103,.12);top:14%;left:-12px}
+    .dot.f2{width:22px;height:22px;background:rgba(145,119,103,.22);bottom:20%;right:-16px}
+    .dot.f3{width:10px;height:10px;background:rgba(145,119,103,.32);top:55%;left:30%}
+
+    @media (max-width:960px){
+      .about .wrap{grid-template-columns:1fr;gap:28px}
+      .photo{max-width:520px;margin-inline:auto}
+    }
+
+    /* Жизнь в садике */
+    .life{position:relative;background:var(--soft);padding:100px 0;overflow:hidden}
+    .life-inner{position:relative;z-index:2}
+    .life-title{font-weight:800;font-size:clamp(28px,4vw,42px);color:var(--text);margin:0 0 10px}
+    .life-quote{font-size:14px;color:var(--text);margin:0 0 28px}
+    .life-quote .author{opacity:.85}
+
+    /* Две строки по 300px */
+    .life-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,300px);grid-auto-columns:300px;gap:16px;justify-content:center}
+    .life-grid .sq{width:300px;height:300px;object-fit:cover;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+
+    /* Белые волны внутри секции (поверх фона) */
+    .life-waves{position:absolute;left:0;right:0;height:160px;pointer-events:none;z-index:1}
+    .life-waves.top{top:0}
+    .life-waves.bottom{bottom:0;transform:rotate(180deg)}
+
+    /* Две полусферы в каждом углу (с лёгким смещением) */
+    .semis{position:absolute;pointer-events:none;z-index:0}
+    .semis.top-left{top:10px;left:10px}
+    .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
+    .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(145,119,103,.25);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
+    .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.25}
+  </style>
 </head>
 <body>
-
-<!-- тонкая бежевый полоска сверху -->
-<div class="topbar"></div>
-
-<!-- HERO -->
-<header class="header">
-  <video class="bg" autoplay muted loop playsinline>
-    <source src="media/back.mp4" type="video/mp4">
-  </video>
-  <div class="logo-wrap">
-    <img src="media/logo.png" alt="Стихия логотип">
-  </div>
-  <div class="wave-bottom">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-      <path d="M0,80 C260,130 600,30 900,70 C1090,95 1270,110 1440,70 L1440,0 L0,0 Z" fill="#fff"/>
-    </svg>
-  </div>
-</header>
-
-<!-- ABOUT -->
-<section class="section about" id="about">
-  <div class="container wrap">
-    <figure class="figure">
-      <img src="media/about.png" alt="О нас">
-      <span class="c1"></span><span class="c2"></span><span class="c3"></span>
-    </figure>
-
-    <div class="text">
-      <h3>Реджио–детский сад</h3>
-      <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия... Это новый образ мышления, где каждый ребёнок — исследователь.</p>
-      <p class="lead">Реджио-педагогика включает:</p>
-      <ul>
-        <li>Гуманный подход;</li>
-        <li>Средовую педагогику (среда, пространство, отношения);</li>
-        <li>Педагогику слушания;</li>
-        <li>«100 языков ребёнка» — разные способы самовыражения;</li>
-        <li>Проектирование и работу в микро-группах;</li>
-        <li>Рефлексию и документирование наблюдений;</li>
-        <li>Развитие креативного мышления и soft-skills.</li>
-      </ul>
-      <a href="#contacts" class="cta">Контакты</a>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY STRIP (Жизнь в садике) -->
-<section class="gallery-band section">
-  <div class="wave-top">
-    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-      <path d="M0,64 C360,120 1080,0 1440,80 L1440,0 L0,0 Z" fill="#fff"/>
-    </svg>
-  </div>
-
-  <div class="container">
-    <div class="title">
-      <div class="h2"><small>Моменты</small>Жизнь в садике</div>
-      <p>«Обсуждая с мужем, пришли к выводу, что это лучшее место, куда мог попасть наш ребёнок». — Александра, мама Камиля.</p>
-    </div>
-    <div class="gallery-row">
-      <img src="media/block1.jpg" alt="">
-      <img src="media/block2.jpg" alt="">
-      <img src="media/block3.jpg" alt="">
-      <img src="media/block4.jpg" alt="">
-      <img src="media/block5.jpg" alt="">
-      <img src="media/block6.jpg" alt="">
-      <img src="media/block7.jpg" alt="">
-      <img src="media/block8.jpg" alt="">
-    </div>
-  </div>
-
-  <div class="wave-bottom">
-    <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
-      <path d="M0,32 C480,120 960,0 1440,64 L1440,110 L0,110 Z" fill="#917767"/>
-    </svg>
-  </div>
-</section>
-
-<!-- TEAM brown quote band -->
-<section class="team-hero">
-  <div class="container">
-    <p class="quote">Любовь во всём, что мы делаем. Мы создаём тёплое пространство, где детям безопасно исследовать, ошибаться и расти вместе.</p>
-    <div class="photo-strip">
-      <img src="media/olya.jpg" alt="Руководитель">
-    </div>
-  </div>
-</section>
-
-<!-- TEAM grid + bio -->
-<section class="section">
-  <div class="container">
-    <div class="team-grid">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-      <img src="media/olya.jpg" alt="">
-    </div>
-    <div class="team-bio">
-      <h4 class="h2" style="font-size:20px; margin-top:14px">Оля — основатель и руководитель проекта</h4>
-      <p class="lead">Рожнова Ольга... краткая биография, миссия, опыт, ценности.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PRICES -->
-<section class="section prices" id="prices">
-  <div class="container">
-    <div class="h2">Стоимость посещения</div>
-    <p class="lead">Актуальные места и условия — уточняйте у администратора.</p>
-    <div class="cards">
-      <div class="card">
-        <h4>3 РАЗА В НЕДЕЛЮ</h4>
-        <p>₽33 000 / месяц<br>Полный день</p>
-        <a class="btn" href="#contacts">Записаться</a>
-      </div>
-      <div class="card">
-        <h4>4 РАЗА В НЕДЕЛЮ</h4>
-        <p>₽38 000 / месяц<br>Полный день</p>
-        <a class="btn" href="#contacts">Записаться</a>
-      </div>
-      <div class="card">
-        <h4>5 РАЗ В НЕДЕЛЮ</h4>
-        <p>₽45 500 / месяц<br>Полный день</p>
-        <a class="btn alt" href="#contacts">Задать вопрос</a>
-      </div>
-      <div class="card">
-        <h4>ЕЖЕДНЕВНОЕ</h4>
-        <p>₽31 500 / месяц<br>Полдня</p>
-        <a class="btn" href="#contacts">Записаться</a>
+  <!-- ВЕРХНЯЯ ПОЛОСА С НАВИГАЦИЕЙ -->
+  <div class="top-band">
+    <div class="container">
+      <div class="nav" role="navigation" aria-label="Главная навигация">
+        <a class="brand" href="#" aria-label="СТИХИЯ — на главную">
+          <img class="icon" src="media/logo-no.png" alt="Знак" />
+          <img class="wordmark" src="media/lo.png" alt="СТИХИЯ" />
+        </a>
+        <div class="spacer" aria-hidden="true"></div>
+        <nav class="nav-links" aria-label="Разделы">
+          <a href="#about">О нас</a>
+          <a href="#team">Команда</a>
+          <a href="#prices">Цены</a>
+          <a href="#extras">Допы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <button class="burger" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </div>
-</section>
 
-<!-- TEXT WIDE (FAQ/описание условий) -->
-<section class="section textwide">
-  <div class="inner">
-    <p>— Что входит в стоимость? — Питание, образовательные проекты, прогулки, документация процесса и коммуникация с родителями.</p>
-    <p>— Какой режим дня? — С 8:30 до 18:30 в будни. Суббота — дополнительные занятия.</p>
-    <p>— Адаптация, набор групп, возрастные подгруппы, и пр. Здесь разместите текстовые ответы в 6–10 абзацев, как на макете.</p>
-  </div>
-</section>
+  <!-- НИЖНЯЯ ТОНКАЯ ПОЛОСА -->
+  <div class="nav-band" aria-hidden="true"></div>
 
-<!-- GRID PHOTOS 2 columns -->
-<section class="grid-photos">
-  <div class="grid2">
-    <div class="tile">
-      <img src="media/toddler2.png" alt="">
-      <div class="cap">Группы для тоддлеров (1,5–3 года)</div>
-    </div>
-    <div class="tile">
-      <img src="media/holiday.jpg" alt="">
-      <div class="cap">Группа ГКП 2–3 года</div>
-    </div>
-    <div class="tile">
-      <img src="media/camp3.jpg" alt="">
-      <div class="cap">Детский проектный лагерь (5–8 лет)</div>
-    </div>
-    <div class="tile">
-      <img src="media/parents2.jpg" alt="">
-      <div class="cap">Мастерские и встречи для родителей</div>
-    </div>
-  </div>
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <video autoplay muted loop playsinline preload="metadata" poster="media/back-fallback.jpg">
+      <source src="media/back.mp4" type="video/mp4" />
+      Ваш браузер не поддерживает видео.
+    </video>
 
-  <!-- нижняя светлая волна -->
-  <div style="margin-top:46px">
-    <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
-      <path d="M0,70 C200,110 520,40 760,70 C1010,100 1240,120 1440,86 L1440,110 L0,110 Z" fill="#fff"/>
-    </svg>
-  </div>
-</section>
+    <div class="hero-inner container">
+      <img class="big-logo" src="media/logo.png" alt="СТИХИЯ" />
+    </div>
 
-<!-- FOOTER with 2 maps + contacts -->
-<footer class="footer" id="contacts">
-  <div class="block">
-    <div class="map">
-      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.481776%2C55.540934&mode=poi&poi%5Bpoint%5D=37.479997%2C55.541190&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D131481280050&z=16.68" loading="lazy"></iframe>
-      <div class="contacts">
-        <div class="line">ул. Александры Монаховой, 94, корп. 4</div>
-        <div class="line">Пн–Пт: 8:30–18:30 · Сб: 10:00–15:30</div>
-        <div class="line">📞 <a href="tel:+79161964999">+7 (916) 196-4999</a></div>
-        <div class="line">✈️ <a href="https://t.me/+79161964999">Telegram</a></div>
-        <div class="line">VK <a href="https://vk.com/public211383023">vk.com/public211383023</a></div>
-        <div class="line">IG <a href="https://instagram.com/reggio_stihiya">instagram.com/reggio_stihiya</a></div>
+    <!-- Две волны: нижняя белая, верхняя серая -->
+    <div class="waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+        <path d="M0,90 C240,60 420,110 720,78 C980,58 1200,102 1440,70 L1440,200 L0,200 Z" fill="rgba(153,153,153,.25)"/>
+        <path d="M0,120 C240,90 420,130 720,98 C980,78 1200,122 1440,90 L1440,200 L0,200 Z" fill="#ffffff"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- О НАС -->
+  <section id="about" class="about">
+    <div class="container wrap">
+      <div class="photo-wrap">
+        <img class="photo" src="media/about.png" alt="О нашем саде" />
+        <span class="dot r1" aria-hidden="true"></span>
+        <span class="dot r2" aria-hidden="true"></span>
+        <span class="dot r3" aria-hidden="true"></span>
+        <span class="dot f1" aria-hidden="true"></span>
+        <span class="dot f2" aria-hidden="true"></span>
+        <span class="dot f3" aria-hidden="true"></span>
+      </div>
+      <div class="text">
+        <div class="title">О НАС</div>
+        <div class="subtitle">Реджио-детский сад</div>
+        <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия, спустя несколько десятилетий получил признание во всем мире. Это новый образ мышления, где все дети считаются носителями потенциала и возможностей, где каждый ребёнок- исследователь и равноправный участник педагогического процесса. Реджио-педагогика считается одним из самых перспективных направлений развития детей нового поколения и включает в себя:</p>
+        <ul>
+          <li>Гуманный подход;</li>
+          <li>Средовую педагогику (среда, пространство, отношения);</li>
+          <li>Педагогику слушания;</li>
+          <li>Принцип «100 языков ребёнка» (предоставление самых разнообразных возможностей для детей выразить себя);</li>
+          <li>Проектирование и организация;</li>
+          <li>Кооперацию и работу в микро-группах;</li>
+          <li>Рефлексия (документирования наблюдений);</li>
+          <li>Развитие креативного мышления и другие Soft-skill навыки.</li>
+        </ul>
       </div>
     </div>
-  </div>
-  </div>
+  </section>
 
-  <div class="copy">Стихия © 2025</div>
-</footer>
+  <!-- Жизнь в садике -->
+  <section id="life" class="life">
+    <!-- Верхние белые волны -->
+    <div class="life-waves top" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z" fill="#ffffff"/>
+        <path d="M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z" fill="rgba(255,255,255,.7)"/>
+      </svg>
+    </div>
 
+    <div class="container life-inner">
+      <h2 class="life-title">Жизнь в садике</h2>
+      <p class="life-quote">«Обсуждая с мужем пришли к выводу, что это лучшее место куда мог попасть наш ребёнок». <span class="author">Александра (мама Камиля).</span></p>
+      <div class="life-grid">
+        <img src="media/block1.jpg" alt="" class="sq" />
+        <img src="media/block3.jpg" alt="" class="sq" />
+        <img src="media/block4.jpg" alt="" class="sq" />
+        <img src="media/block5.jpg" alt="" class="sq" />
+        <img src="media/block6.jpg" alt="" class="sq" />
+        <img src="media/block7.jpg" alt="" class="sq" />
+        <img src="media/block8.jpg" alt="" class="sq" />
+        <img src="media/block9.jpg" alt="" class="sq" />
+      </div>
+    </div>
+
+    <!-- Нижние белые волны -->
+    <div class="life-waves bottom" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z" fill="#ffffff"/>
+        <path d="M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z" fill="rgba(255,255,255,.7)"/>
+      </svg>
+    </div>
+
+    <!-- По две полусферы в каждом углу -->
+    <div class="semis top-left" aria-hidden="true">
+      <span class="semi first"></span>
+      <span class="semi second"></span>
+    </div>
+    <div class="semis bottom-right" aria-hidden="true">
+      <span class="semi first"></span>
+      <span class="semi second"></span>
+    </div>
+  </section>
+
+  <script>
+    // Бургер
+    const burger = document.querySelector('.burger');
+    const mobile = document.getElementById('mobile-menu');
+    function toggleMenu(){
+      const opened = mobile.classList.toggle('open');
+      burger.setAttribute('aria-expanded', opened);
+      mobile.hidden = !opened;
+    }
+    burger?.addEventListener('click', toggleMenu);
+
+    // Защита от автопаузы видео в некоторых браузерах
+    const vid = document.querySelector('.hero video');
+    if (vid) {
+      const tryPlay = () => vid.play().catch(()=>{});
+      document.addEventListener('visibilitychange', tryPlay, {passive:true});
+      window.addEventListener('focus', tryPlay, {passive:true});
+    }
+
+    // Микропараллакс для кружочков при скролле
+    const dots = Array.from(document.querySelectorAll('.photo-wrap .dot'));
+    const speeds = dots.map((_,i)=> (i%3===0? 0.25 : i%3===1? 0.4 : 0.6));
+    let ticking=false;
+    function onScroll(){
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const y=window.scrollY||window.pageYOffset;
+          dots.forEach((el,idx)=>{
+            const dy=Math.sin((y+idx*80)/500)*10 * speeds[idx];
+            el.style.transform=`translateY(${dy.toFixed(1)}px)`;
+          });
+          ticking=false;
+        });
+        ticking=true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  </script>
 </body>
 </html>
