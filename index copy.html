@@ -1,348 +1,367 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Quokka Herding Game</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: url("assets/image.png") center center / cover repeat;
-      font-family: sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Стихия — реджио-детский сад</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --beige:#e2d7ba; --sand:#beb395; --tan:#cec2ac; --light:#f6f6f6;
+  --brown:#917767; --dark:#232529; --text:#4b4f56;
+  --container:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:#fff; color:var(--dark); line-height:1.65;
+}
+img{max-width:100%; display:block}
 
-    #score {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 64px;
-      font-weight: bold;
-      color: #222;
-      z-index: 5;
-      text-align: center;
-    }
+/* Top bar (узкая бежевый штрих сверху) */
+.topbar{height:15px;background:#bbb092}
 
-    #score::after {
-      content: "\Aквок в баре";
-      white-space: pre;
-      display: block;
-      font-size: 24px;
-    }
+/* Header / Hero */
+.header{
+  position:relative; height:88vh; min-height:520px; overflow:hidden;
+  background:#000;
+}
+.header video,.header .bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.55)
+}
+.header .logo-wrap{
+  position:relative; z-index:2; height:100%; display:flex; align-items:center; justify-content:center;
+}
+.header .logo-wrap img{width:min(48vw,360px)}
+/* волнистый низ шапки */
+.header .wave-bottom{position:absolute; left:0; right:0; bottom:-1px}
+.header .wave-bottom svg{display:block; width:100%; height:auto}
 
-    #emojiCount {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      z-index: 6;
-      text-align: center;
-    }
+/* Общие контейнеры/заголовки */
+.section{padding:72px 20px; position:relative}
+.container{max-width:var(--container); margin:0 auto}
+.h2{font-size:32px; font-weight:800; margin-bottom:18px; letter-spacing:.2px}
+.h2 small{display:block; font-weight:700; color:#666; font-size:16px; margin-bottom:6px}
+.lead{color:#5b5b5b}
 
-    #house {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 250px;
-      height: 250px;
-      z-index: 2;
-      transition: transform 0.2s ease;
-    }
+/* About */
+.about{background:#fff}
+.about .wrap{display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:start}
+.about .figure{position:relative; width:100%; max-width:420px}
+.about .figure img{border-radius:50%}
+.about .c1,.about .c2,.about .c3{position:absolute;border-radius:50%}
+.about .c1{inset:-3% -3% 0 0;background:var(--sand); z-index:0}
+.about .c2{inset:-9% -9% 0 0;background:var(--tan); z-index:-1}
+.about .c3{width:14px;height:14px;left:22px;bottom:12px;background:var(--brown);border:2px solid #fff}
 
-    .quokka, .collie {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      z-index: 3;
-      transition: transform 0.2s ease;
-    }
+.about .text h3{font-size:26px; font-weight:800; margin-bottom:10px}
+.about .text p{color:var(--text); margin-bottom:12px}
+.about .text ul{margin:14px 0 18px 1.2rem; color:var(--text)}
+.about .cta{display:inline-block; background:var(--sand); color:#fff; font-weight:700;
+  padding:10px 18px; border-radius:8px; text-decoration:none; transition:.2s}
+.about .cta:hover{background:var(--brown)}
 
-    .emoji {
-      position: absolute;
-      font-size: 24px;
-      opacity: 1;
-      width: auto;
-      height: auto;
-      z-index: 4;
-    }
-  </style>
+/* Моменты / Галерея с волнами */
+.gallery-band{background:var(--light); padding:72px 0}
+.gallery-band .wave-top,.gallery-band .wave-bottom{
+  position:absolute; left:0; right:0; height:auto; width:100%; pointer-events:none
+}
+.gallery-band .wave-top{top:-1px; transform:translateY(-100%)}
+.gallery-band .wave-bottom{bottom:-1px; transform:translateY(100%)}
+.gallery-band .title{text-align:center}
+.gallery-band .title .h2{margin-bottom:8px}
+.gallery-band .title p{color:#6a6f77}
+.gallery-row{
+  margin:26px auto 0; max-width:980px; display:grid; grid-template-columns:repeat(8,1fr); gap:10px;
+}
+.gallery-row img{border-radius:10px; width:100%; aspect-ratio:1/1; object-fit:cover}
+
+/* Команда — коричневый блок с цитатой */
+.team-hero{
+  background:var(--brown); color:#fff; padding:84px 0; text-align:center; position:relative
+}
+.team-hero .quote{max-width:680px; margin:0 auto 18px; opacity:.9}
+.team-hero .photo-strip{max-width:760px; margin:18px auto 0; border-radius:14px; overflow:hidden}
+.team-grid{
+  display:grid; grid-template-columns:repeat(8,1fr); gap:18px; margin-top:24px; justify-items:center
+}
+.team-grid img{width:120px; height:120px; border-radius:50%; object-fit:cover}
+.team-bio{max-width:760px; margin:24px auto 0; text-align:center; color:#333}
+
+/* Прайсы */
+.prices{background:#fff; text-align:center}
+.cards{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:18px
+}
+.card{
+  border:2px solid var(--tan); border-radius:14px; padding:22px 16px; background:#fff
+}
+.card h4{font-weight:800; font-size:14px; letter-spacing:.6px; color:#6a645a}
+.card p{margin-top:8px; font-size:18px}
+.card .btn{margin-top:12px; display:inline-block; padding:10px 14px; border-radius:10px;
+  background:#232529; color:#fff; text-decoration:none; font-weight:700}
+.card .btn.alt{background:#b6aa93}
+
+/* Текстовый блок (FAQ/описание) */
+.textwide{background:#fff}
+.textwide .inner{max-width:900px; margin:0 auto; color:#5a5f66; font-size:15px}
+.textwide .inner p{margin:10px 0}
+
+/* Галерея 2 колонки крупных карточек */
+.grid-photos{
+  background:var(--light); padding:64px 0
+}
+.grid2{max-width:980px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:22px}
+.grid2 .tile{background:#fff; border-radius:10px; overflow:hidden}
+.grid2 .tile img{width:100%; height:360px; object-fit:cover}
+.grid2 .tile .cap{padding:10px 14px; font-size:14px; color:#555}
+
+/* Тёмный футер с 2 картами и контактами */
+.footer{
+  background:#131417; color:#eaeaea; padding:38px 0 26px
+}
+.footer .block{max-width:1180px; margin:0 auto 28px}
+.footer .map{display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:start; background:#0e0f11; padding:16px; border-radius:12px}
+.footer iframe{width:100%; height:220px; border:0; border-radius:10px}
+.contacts{
+  display:grid; gap:10px; font-size:14px
+}
+.contacts .line{display:flex; align-items:center; gap:8px; opacity:.9}
+.contacts a{color:#fff; text-decoration:none}
+.copy{opacity:.6; text-align:center; font-size:13px; margin-top:10px}
+
+/* Waves SVG colors adjustment */
+svg{display:block}
+
+/* Responsive */
+@media (max-width:1100px){
+  .about .wrap{grid-template-columns:360px 1fr}
+  .team-grid{grid-template-columns:repeat(4,1fr)}
+  .cards{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:820px){
+  .header{height:64vh}
+  .about .wrap{grid-template-columns:1fr; gap:26px; justify-items:center}
+  .gallery-row{grid-template-columns:repeat(4,1fr)}
+  .team-grid{grid-template-columns:repeat(4,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .footer .map{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .h2{font-size:26px}
+  .gallery-row{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .cards{grid-template-columns:1fr}
+  .grid2 .tile img{height:240px}
+}
+</style>
 </head>
 <body>
 
-<div id="score">0</div>
-<div id="emojiCount"></div>
-<img src="assets/house.png" id="house" alt="House">
-<audio id="burpSound" src="assets/burp.wav"></audio>
+<!-- тонкая бежевый полоска сверху -->
+<div class="topbar"></div>
 
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-<script>
-  const socket = io("http://localhost:3000");
+<!-- HERO -->
+<header class="header">
+  <video class="bg" autoplay muted loop playsinline>
+    <source src="media/back.mp4" type="video/mp4">
+  </video>
+  <div class="logo-wrap">
+    <img src="media/logo.png" alt="Стихия логотип">
+  </div>
+  <div class="wave-bottom">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,80 C260,130 600,30 900,70 C1090,95 1270,110 1440,70 L1440,0 L0,0 Z" fill="#fff"/>
+    </svg>
+  </div>
+</header>
 
-  let collieIsMoving = false;
-  let collieX = window.innerWidth / 2;
-  let collieY = window.innerHeight / 2;
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="container wrap">
+    <figure class="figure">
+      <img src="media/about.png" alt="О нас">
+      <span class="c1"></span><span class="c2"></span><span class="c3"></span>
+    </figure>
 
-  function sendMoveStart(x, y) {
-    socket.emit("moveStart", { x: Math.round(x), y: Math.round(y) });
-    collieIsMoving = true;
-  }
+    <div class="text">
+      <h3>Реджио–детский сад</h3>
+      <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия... Это новый образ мышления, где каждый ребёнок — исследователь.</p>
+      <p class="lead">Реджио-педагогика включает:</p>
+      <ul>
+        <li>Гуманный подход;</li>
+        <li>Средовую педагогику (среда, пространство, отношения);</li>
+        <li>Педагогику слушания;</li>
+        <li>«100 языков ребёнка» — разные способы самовыражения;</li>
+        <li>Проектирование и работу в микро-группах;</li>
+        <li>Рефлексию и документирование наблюдений;</li>
+        <li>Развитие креативного мышления и soft-skills.</li>
+      </ul>
+      <a href="#contacts" class="cta">Контакты</a>
+    </div>
+  </div>
+</section>
 
-  function sendMoveEnd(x, y) {
-    socket.emit("moveEnd", { x: Math.round(x), y: Math.round(y) });
-    collieIsMoving = false;
-  }
+<!-- GALLERY STRIP (Жизнь в садике) -->
+<section class="gallery-band section">
+  <div class="wave-top">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,64 C360,120 1080,0 1440,80 L1440,0 L0,0 Z" fill="#fff"/>
+    </svg>
+  </div>
 
-  window.addEventListener("keydown", () => {
-    if (!collieIsMoving) sendMoveStart(collieX, collieY);
-  });
+  <div class="container">
+    <div class="title">
+      <div class="h2"><small>Моменты</small>Жизнь в садике</div>
+      <p>«Обсуждая с мужем, пришли к выводу, что это лучшее место, куда мог попасть наш ребёнок». — Александра, мама Камиля.</p>
+    </div>
+    <div class="gallery-row">
+      <img src="media/block1.jpg" alt="">
+      <img src="media/block2.jpg" alt="">
+      <img src="media/block3.jpg" alt="">
+      <img src="media/block4.jpg" alt="">
+      <img src="media/block5.jpg" alt="">
+      <img src="media/block6.jpg" alt="">
+      <img src="media/block7.jpg" alt="">
+      <img src="media/block8.jpg" alt="">
+    </div>
+  </div>
 
-  window.addEventListener("keyup", () => {
-    if (collieIsMoving) sendMoveEnd(collieX, collieY);
-  });
+  <div class="wave-bottom">
+    <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,32 C480,120 960,0 1440,64 L1440,110 L0,110 Z" fill="#917767"/>
+    </svg>
+  </div>
+</section>
 
-  let mouseMoveTimer = null;
-  window.addEventListener("mousemove", () => {
-    if (!collieIsMoving) sendMoveStart(collieX, collieY);
-    clearTimeout(mouseMoveTimer);
-    mouseMoveTimer = setTimeout(() => {
-      if (collieIsMoving) sendMoveEnd(collieX, collieY);
-    }, 300);
-  });
-</script>
+<!-- TEAM brown quote band -->
+<section class="team-hero">
+  <div class="container">
+    <p class="quote">Любовь во всём, что мы делаем. Мы создаём тёплое пространство, где детям безопасно исследовать, ошибаться и расти вместе.</p>
+    <div class="photo-strip">
+      <img src="media/olya.jpg" alt="Руководитель">
+    </div>
+  </div>
+</section>
 
-<script>
-const house = document.getElementById("house");
-const scoreDisplay = document.getElementById("score");
-const emojiCounter = document.getElementById("emojiCount");
-const burpSound = document.getElementById("burpSound");
+<!-- TEAM grid + bio -->
+<section class="section">
+  <div class="container">
+    <div class="team-grid">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+      <img src="media/olya.jpg" alt="">
+    </div>
+    <div class="team-bio">
+      <h4 class="h2" style="font-size:20px; margin-top:14px">Оля — основатель и руководитель проекта</h4>
+      <p class="lead">Рожнова Ольга... краткая биография, миссия, опыт, ценности.</p>
+    </div>
+  </div>
+</section>
 
-let score = 0;
-const emojiStats = {};
-const quokkas = [];
+<!-- PRICES -->
+<section class="section prices" id="prices">
+  <div class="container">
+    <div class="h2">Стоимость посещения</div>
+    <p class="lead">Актуальные места и условия — уточняйте у администратора.</p>
+    <div class="cards">
+      <div class="card">
+        <h4>3 РАЗА В НЕДЕЛЮ</h4>
+        <p>₽33 000 / месяц<br>Полный день</p>
+        <a class="btn" href="#contacts">Записаться</a>
+      </div>
+      <div class="card">
+        <h4>4 РАЗА В НЕДЕЛЮ</h4>
+        <p>₽38 000 / месяц<br>Полный день</p>
+        <a class="btn" href="#contacts">Записаться</a>
+      </div>
+      <div class="card">
+        <h4>5 РАЗ В НЕДЕЛЮ</h4>
+        <p>₽45 500 / месяц<br>Полный день</p>
+        <a class="btn alt" href="#contacts">Задать вопрос</a>
+      </div>
+      <div class="card">
+        <h4>ЕЖЕДНЕВНОЕ</h4>
+        <p>₽31 500 / месяц<br>Полдня</p>
+        <a class="btn" href="#contacts">Записаться</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-const houseImages = [
-  "assets/house.png",
-  "assets/house1.png",
-  "assets/house2.png",
-  "assets/house3.png",
-  "assets/house4.png",
-  "assets/house5.png"
-];
+<!-- TEXT WIDE (FAQ/описание условий) -->
+<section class="section textwide">
+  <div class="inner">
+    <p>— Что входит в стоимость? — Питание, образовательные проекты, прогулки, документация процесса и коммуникация с родителями.</p>
+    <p>— Какой режим дня? — С 8:30 до 18:30 в будни. Суббота — дополнительные занятия.</p>
+    <p>— Адаптация, набор групп, возрастные подгруппы, и пр. Здесь разместите текстовые ответы в 6–10 абзацев, как на макете.</p>
+  </div>
+</section>
 
-const collie = document.createElement("img");
-collie.className = "collie";
-collie.src = "assets/collie_down.png";
-document.body.appendChild(collie);
+<!-- GRID PHOTOS 2 columns -->
+<section class="grid-photos">
+  <div class="grid2">
+    <div class="tile">
+      <img src="media/ex1.jpg" alt="">
+      <div class="cap">Группы для тоддлеров (1,5–3 года)</div>
+    </div>
+    <div class="tile">
+      <img src="media/ex2.jpg" alt="">
+      <div class="cap">Группа ГКП 2–3 года</div>
+    </div>
+    <div class="tile">
+      <img src="media/ex3.jpg" alt="">
+      <div class="cap">Детский проектный лагерь (5–8 лет)</div>
+    </div>
+    <div class="tile">
+      <img src="media/ex4.jpg" alt="">
+      <div class="cap">Мастерские и встречи для родителей</div>
+    </div>
+  </div>
 
-let targetX = collieX;
-let targetY = collieY;
-let keysPressed = {};
-let lastCollieSwitch = 0;
+  <!-- нижняя светлая волна -->
+  <div style="margin-top:46px">
+    <svg viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,70 C200,110 520,40 760,70 C1010,100 1240,120 1440,86 L1440,110 L0,110 Z" fill="#fff"/>
+    </svg>
+  </div>
+</section>
 
-addEventListener("keydown", e => keysPressed[e.key] = true);
-addEventListener("keyup", e => keysPressed[e.key] = false);
-addEventListener("mousemove", e => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-});
+<!-- FOOTER with 2 maps + contacts -->
+<footer class="footer" id="contacts">
+  <div class="block">
+    <div class="map">
+      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.481776%2C55.540934&mode=poi&poi%5Bpoint%5D=37.479997%2C55.541190&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D131481280050&z=16.68" loading="lazy"></iframe>
+      <div class="contacts">
+        <div class="line">ул. Александры Монаховой, 94, корп. 4</div>
+        <div class="line">Пн–Пт: 8:30–18:30 · Сб: 10:00–15:30</div>
+        <div class="line">📞 <a href="tel:+79161964999">+7 (916) 196-4999</a></div>
+        <div class="line">✈️ <a href="https://t.me/+79161964999">Telegram</a></div>
+        <div class="line">VK <a href="https://vk.com/public211383023">vk.com/public211383023</a></div>
+        <div class="line">IG <a href="https://instagram.com/reggio_stihiya">instagram.com/reggio_stihiya</a></div>
+      </div>
+    </div>
+  </div>
 
-const quokkaImgs = {
-  up: "quokka_up.png",
-  down: "quokka_down.png",
-  left: "quokka_left.png",
-  right: "quokka_right.png"
-};
+  <div class="block">
+    <div class="map">
+      <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A&amp;source=constructor" loading="lazy"></iframe>
+      <div class="contacts">
+        <div class="line">Второй кампус / площадка (пример)</div>
+        <div class="line">Часы работы и способы связи аналогично</div>
+        <div class="line">✉️ <a href="mailto:info@example.com">info@example.com</a></div>
+      </div>
+    </div>
+  </div>
 
-const minDistToEdge = 40;
-const minSeparation = 40;
-const dogReactionRange = 250 * 0.66;
-const directionChangeInterval = 2000;
-const edibleEmojis = ["🍎", "🍌", "🍇", "🍓", "🍉", "🍍", "🍑", "🍒", "🍺"];
+  <div class="copy">Стихия © 2025</div>
+</footer>
 
-function spawnQuokka() {
-  const q = document.createElement("img");
-  q.className = "quokka";
-  q.src = "assets/quokka_down.png";
-  q.style.left = Math.random() * (window.innerWidth - 160) + 80 + "px";
-  q.style.top = Math.random() * (window.innerHeight - 160) + 80 + "px";
-  document.body.appendChild(q);
-  quokkas.push({
-    el: q,
-    x: parseFloat(q.style.left),
-    y: parseFloat(q.style.top),
-    vx: Math.random() * 2 - 1,
-    vy: Math.random() * 2 - 1,
-    lastDirChange: Date.now()
-  });
-}
-
-for (let i = 0; i < 15; i++) spawnQuokka();
-
-function updateEmojiCounter() {
-  emojiCounter.textContent = Object.entries(emojiStats).map(([e, c]) => `${e} ${c}`).join("  ");
-}
-
-function spawnEmoji() {
-  const emoji = document.createElement("div");
-  emoji.className = "emoji";
-  const type = edibleEmojis[Math.floor(Math.random() * edibleEmojis.length)];
-  emoji.textContent = type;
-  emoji.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  emoji.style.top = window.innerHeight + "px";
-  document.body.appendChild(emoji);
-
-  let y = window.innerHeight;
-  const interval = setInterval(() => {
-    y -= 2;
-    emoji.style.top = y + "px";
-    const collieRect = collie.getBoundingClientRect();
-    const emojiRect = emoji.getBoundingClientRect();
-    if (
-      emojiRect.left < collieRect.right &&
-      emojiRect.right > collieRect.left &&
-      emojiRect.top < collieRect.bottom &&
-      emojiRect.bottom > collieRect.top
-    ) {
-      clearInterval(interval);
-      emoji.remove();
-      emojiStats[type] = (emojiStats[type] || 0) + 1;
-      updateEmojiCounter();
-      spawnQuokka();
-      return;
-    }
-    if (y <= window.innerHeight / 2) {
-      clearInterval(interval);
-      emoji.remove();
-    }
-  }, 30);
-}
-
-setInterval(() => {
-  const count = 1 + Math.floor(Math.random() * 3);
-  for (let i = 0; i < count; i++) spawnEmoji();
-}, 1000);
-
-function animate() {
-  const now = Date.now();
-  let dx = 0, dy = 0;
-
-  if (keysPressed["ArrowLeft"] || keysPressed["a"]) dx = -1;
-  if (keysPressed["ArrowRight"] || keysPressed["d"]) dx = 1;
-  if (keysPressed["ArrowUp"] || keysPressed["w"]) dy = -1;
-  if (keysPressed["ArrowDown"] || keysPressed["s"]) dy = 1;
-
-  if (dx !== 0 || dy !== 0) {
-    const len = Math.sqrt(dx * dx + dy * dy);
-    collieX += (dx / len) * 5;
-    collieY += (dy / len) * 5;
-  } else {
-    const mx = targetX - collieX;
-    const my = targetY - collieY;
-    const dist = Math.sqrt(mx * mx + my * my);
-    if (dist > 1) {
-      collieX += mx / dist * 5;
-      collieY += my / dist * 5;
-    }
-  }
-
-  if (now - lastCollieSwitch > 500) {
-    lastCollieSwitch = now;
-    const cx = targetX - collieX;
-    const cy = targetY - collieY;
-    collie.src = Math.abs(dx || cx) > Math.abs(dy || cy)
-      ? ((dx || cx) > 0 ? "assets/collie_left.png" : "assets/collie_right.png")
-      : ((dy || cy) > 0 ? "assets/collie_down.png" : "assets/collie_up.png");
-  }
-
-  collie.style.left = collieX + "px";
-  collie.style.top = collieY + "px";
-
-  for (let i = quokkas.length - 1; i >= 0; i--) {
-    const q = quokkas[i];
-    const cx = collieX - q.x;
-    const cy = collieY - q.y;
-    const d = Math.sqrt(cx * cx + cy * cy);
-    const isScared = d < dogReactionRange;
-
-    if (!isScared && now - q.lastDirChange > directionChangeInterval) {
-      q.vx = (Math.random() - 0.5) * 4;
-      q.vy = (Math.random() - 0.5) * 4;
-      q.lastDirChange = now;
-    } else if (isScared) {
-      q.vx -= cx / d * 0.5;
-      q.vy -= cy / d * 0.5;
-    }
-
-    for (let j = 0; j < quokkas.length; j++) {
-      if (i !== j) {
-        const other = quokkas[j];
-        const ox = q.x - other.x;
-        const oy = q.y - other.y;
-        const od = Math.sqrt(ox * ox + oy * oy);
-        if (od < minSeparation && od > 0) {
-          q.vx += ox / od * 0.3;
-          q.vy += oy / od * 0.3;
-        } else if (!isScared && od < 200) {
-          q.vx -= ox / od * 0.05;
-          q.vy -= oy / od * 0.05;
-        }
-      }
-    }
-
-    q.vx *= 0.95;
-    q.vy *= 0.95;
-
-    q.x += q.vx;
-    q.y += q.vy;
-
-    q.x = Math.max(minDistToEdge, Math.min(window.innerWidth - 80 - minDistToEdge, q.x));
-    q.y = Math.max(minDistToEdge, Math.min(window.innerHeight - 80 - minDistToEdge, q.y));
-
-    q.el.style.left = q.x + "px";
-    q.el.style.top = q.y + "px";
-
-    q.el.src = Math.abs(q.vx) > Math.abs(q.vy)
-      ? (q.vx > 0 ? "assets/" + quokkaImgs.right : "assets/" + quokkaImgs.left)
-      : (q.vy > 0 ? "assets/" + quokkaImgs.down : "assets/" + quokkaImgs.up);
-
-    const houseRect = house.getBoundingClientRect();
-    const qRect = q.el.getBoundingClientRect();
-    if (
-      qRect.left < houseRect.right &&
-      qRect.right > houseRect.left &&
-      qRect.top < houseRect.bottom &&
-      qRect.bottom > houseRect.top
-    ) {
-      burpSound.currentTime = 0;
-      burpSound.play();
-      house.style.transform = "translateX(-50%) scale(1.3)";
-      setTimeout(() => house.style.transform = "translateX(-50%) scale(1)", 200);
-      q.el.style.transform = "scale(0)";
-      setTimeout(() => q.el.remove(), 200);
-      quokkas.splice(i, 1);
-      score++;
-      scoreDisplay.textContent = score;
-
-      // Рандомная смена домика каждые 10 квок
-      
-      if (score % 10 === 0) {
-        let currentSrc = house.src.split('/').pop(); // Получаем имя файла без пути
-        let newHouse;
-        do {
-          newHouse = houseImages[Math.floor(Math.random() * houseImages.length)];
-        } while (newHouse.includes(currentSrc)); // Сравниваем только имена файлов
-        house.src = newHouse;
-      }
-    
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
 </body>
 </html>
