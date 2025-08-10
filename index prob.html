@@ -193,6 +193,61 @@
     .info-item a:hover{ text-decoration-color:#fff }
 
     .footer-line{opacity:.65;font-size:12px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+    /* === ЦЕНЫ — визуал как на макете ================================ */
+.prices{background:#fff;padding:110px 0 140px}
+.prices h2{font-weight:800;font-size:clamp(34px,5vw,56px);text-align:center;margin:0 0 10px}
+.prices .note{max-width:80ch;margin:0 auto 44px;text-align:center;opacity:.8}
+
+/* белая «панель» с большим мягким свечением вокруг всех карточек */
+.price-panel{
+  max-width:1240px;margin:0 auto;
+  border-radius:24px;background:#fff;
+  padding:36px 26px 40px;
+  box-shadow:
+    0 40px 90px rgba(0,0,0,.08),
+    0 4px 20px rgba(0,0,0,.05);
+}
+
+/* сетка карточек */
+.price-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
+}
+@media (max-width:1050px){.price-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.price-grid{grid-template-columns:1fr}}
+
+.tariff{
+  background:#fff;border-radius:20px;overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;min-height:520px;
+}
+
+/* верхняя плашка */
+.tariff .head{
+  background:#eef0f3;color:#9aa0a6;
+  text-transform:uppercase;letter-spacing:.18em;
+  font-weight:700;text-align:center;
+  padding:24px 16px;font-size:14px;
+}
+
+/* контент */
+.tariff .body{padding:36px 28px 28px;display:grid;gap:18px;justify-items:center;text-align:center;flex:1}
+.price{font-weight:800;font-size:clamp(28px,3.6vw,40px);color:#111}
+.period{font-weight:800;text-transform:uppercase;letter-spacing:.12em;opacity:.7}
+.desc{opacity:.8}
+
+.btn-enroll{
+  margin-top:auto; text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:56px;padding:0 26px;border-radius:12px;border:0;
+  background:#232529;color:#fff;font-weight:800;cursor:pointer;
+}
+.btn-enroll:hover{filter:brightness(1.05)}
+
+/* выделенный тариф: поднят, коричневая плашка и кнопка */
+.tariff--featured{transform:translateY(-18px);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.tariff--featured .head{background:var(--brown);color:#fff}
+.tariff--featured .btn-enroll{background:var(--brown)}
+
   </style>
 </head>
 <body>
@@ -350,6 +405,62 @@
     <div class="semis top-left" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
     <div class="semis bottom-right" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
   </section>
+<!-- ЦЕНЫ (волны сверху/снизу) -->
+<!-- ЦЕНЫ (волны сверху/снизу) -->
+<section id="prices" class="prices wavy wave-top wave-bottom">
+  <div class="container">
+    <h2>Стоимость посещения</h2>
+    <p class="note">Наличие свободных мест и актуальные цены просим уточнять у сотрудников по указанным контактным данным.</p>
+
+    <div class="price-panel">
+      <div class="price-grid">
+        <!-- 3 раза в неделю -->
+        <article class="tariff">
+          <div class="head">3 раза в неделю</div>
+          <div class="body">
+            <div class="price">₽33000</div>
+            <div class="period">1 месяц</div>
+            <div class="desc">Полный день</div>
+            <a class="btn-enroll" href="#contacts">Записаться</a>
+          </div>
+        </article>
+
+        <!-- 4 раза в неделю -->
+        <article class="tariff">
+          <div class="head">4 раза в неделю</div>
+          <div class="body">
+            <div class="price">₽38000</div>
+            <div class="period">1 месяц</div>
+            <div class="desc">Полный день</div>
+            <a class="btn-enroll" href="#contacts">Записаться</a>
+          </div>
+        </article>
+
+        <!-- 5 раз в неделю (выделенный) -->
+        <article class="tariff tariff--featured" aria-label="Рекомендуемый тариф">
+          <div class="head">5 раз в неделю</div>
+          <div class="body">
+            <div class="price">₽45500</div>
+            <div class="period">1 месяц</div>
+            <div class="desc">Полный день</div>
+            <a class="btn-enroll" href="#contacts">Записаться</a>
+          </div>
+        </article>
+
+        <!-- Ежедневное (полдня) -->
+        <article class="tariff">
+          <div class="head">Ежедневное</div>
+          <div class="body">
+            <div class="price">₽31500</div>
+            <div class="period">1 месяц</div>
+            <div class="desc">Полдня</div>
+            <a class="btn-enroll" href="#contacts">Записаться</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ДОПОЛНИТЕЛЬНЫЕ ЗАНЯТИЯ И МЕРОПРИЯТИЯ -->
   <section id="extras" class="extras">
@@ -549,6 +660,7 @@
     document.querySelectorAll('[data-card]').forEach(card=>{
       card.addEventListener('click', ()=>{
         card.classList.toggle('open');
+        
       });
     });
   </script>
