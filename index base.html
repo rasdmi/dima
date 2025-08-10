@@ -31,9 +31,9 @@
     .top-band .nav{display:flex;align-items:center;gap:16px;min-height:96px}
     .brand{display:flex;align-items:center;gap:12px;min-width:0}
     /* Увеличили logo-no.png в 3 раза */
-    .brand img.icon{width:84px;height:84px;object-fit:contain}
-    /* Вместо текста — картинка log.png */
-    .brand img.wordmark{height:34px;width:auto}
+    .brand img.icon{width:164px;height:84px;object-fit:contain}
+    /* Вместо текста — картинка lo.png */
+    .brand img.wordmark{height:51px;width:auto}
 
     .spacer{flex:1}
     .nav-links{display:flex;align-items:center;gap:18px}
@@ -48,6 +48,7 @@
       .nav-links{display:none}
       .burger{display:block}
       .brand img.wordmark{height:26px}
+      
     }
 
     /* Нижняя полоса в 3 раза тоньше */
@@ -125,6 +126,42 @@
     .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
     .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(145,119,103,.25);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
     .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.25}
+    /* НАША КОМАНДА — фон #917767, белый текст, волны сверху/снизу */
+.team{position:relative;background:var(--brown);color:#fff;overflow:hidden}
+.team::before,.team::after{content:"";position:absolute;left:0;right:0;height:160px;pointer-events:none;z-index:1;background-repeat:no-repeat;background-size:100% 100%}
+.team::before{top:0;transform:translateY(-100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");}
+.team::after{bottom:0;transform:translateY(100%) rotate(180deg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");}
+.team-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:100px 20px;text-align:center}
+.team .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.95;margin:0 0 8px}
+.team .headline{font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 14px}
+.team .sub{font-size:14px;opacity:.95;max-width:75ch;margin:0 auto 36px}
+/* Сетка 2 строки по 4 кружка */
+.team-list{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 20px;justify-items:center}
+@media (max-width:960px){.team-list{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.team-list{grid-template-columns:1fr}}
+.member{display:flex;flex-direction:column;align-items:center}
+/* Аватар с дублером-блюром */
+.avatar {
+  position: relative;
+  width: 200px;
+  height: 260px;
+  border-radius: 16px; /* закруглённые углы */
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+/* Полусферы на тёмном фоне */
+.team .semis{position:absolute;pointer-events:none;z-index:0}
+.team .semis.top-left{top:10px;left:10px}
+.team .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
+.team .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(255,255,255,.28);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
+.team .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.35}
   </style>
 </head>
 <body>
@@ -248,6 +285,7 @@
     </div>
   </section>
 <!-- НАША КОМАНДА -->
+<!-- НАША КОМАНДА -->
 <section id="team" class="team">
   <div class="team-inner">
     <div class="eyebrow">НАША КОМАНДА</div>
@@ -255,92 +293,70 @@
     <p class="sub">Чтобы ВОСПИТЫВАТЬ детей, мы постоянно НАПИТЫВАЕМ себя новыми знаниями, практиками, инструментами, ведь ОБРАЗование создается от слова «ОБРАЗ».</p>
 
     <div class="team-list">
-      <!-- 1 -->
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt="Ольга — Основатель проекта"></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/ol.jpg" alt="Оля">
         </div>
+        <h3 class="name">Это Оля</h3>
       </article>
-
-      <!-- 2 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/al.jpg" alt="Алена">
         </div>
+        <h3 class="name">Это Алена</h3>
       </article>
-
-      <!-- 3 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/an.jpg" alt="Аня">
         </div>
+        <h3 class="name">Это Аня</h3>
       </article>
-
-      <!-- 4 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/na.jpg" alt="Настя">
         </div>
+        <h3 class="name">Это Настя</h3>
       </article>
-
-      <!-- 5 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/ir.jpg" alt="Ира">
         </div>
+        <h3 class="name">Это Ира</h3>
       </article>
-
-      <!-- 6 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/ma.jpg" alt="Марина">
         </div>
+        <h3 class="name">Это Марина</h3>
       </article>
-
-      <!-- 7 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/di.jpg" alt="Дима">
         </div>
+        <h3 class="name">Это Дима</h3>
       </article>
-
-      <!-- 8 -->
+    
       <article class="member">
-        <figure class="photo"><img src="media/olya.jpg" alt=""></figure>
-        <div class="bio">
-          <p class="role">Основатель и руководитель проекта</p>
-          <h3 class="name">Рожнова Ольга</h3>
-          <p class="desc">Свой путь в мир осознанной педагогики я начала с обучения в Академии гуманной педагогики Шалвы Александровича Амонашвили, а затем погрузилась в Реджио-подход. «Стихия» – это мой взгляд и взгляд всей команды на мир детства, это бережная и развивающая среда, место вдохновения, надежности и спокойствия.</p>
+        <div class="avatar">
+          <img class="img" src="media/na1.jpg" alt="Настя 2">
         </div>
+        <h3 class="name">Это Настя 2</h3>
       </article>
     </div>
+    
   </div>
 
-  <!-- светлые полусферы -->
+  <!-- полусферы для раздела команды -->
   <div class="semis top-left" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
   <div class="semis bottom-right" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
 </section>
+
 
   <script>
     // Бургер
