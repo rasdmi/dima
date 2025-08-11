@@ -247,6 +247,53 @@
 .tariff--featured{transform:translateY(-18px);box-shadow:0 18px 50px rgba(0,0,0,.12)}
 .tariff--featured .head{background:var(--brown);color:#fff}
 .tariff--featured .btn-enroll{background:var(--brown)}
+/* ===== ПУЗЫРЬКИ / ДЕКОР В РАЗДЕЛАХ ===== */
+.has-bubbles { position: relative; overflow: hidden; }
+.has-bubbles > * { position: relative; z-index: 2; } /* контент поверх пузырьков */
+.bubbles {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0; /* ниже контента, выше фона */
+}
+.bubble {
+  position: absolute; border-radius: 999px; will-change: transform;
+  animation-name: bubble-bob; animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  /* параметры будут задаваться через CSS-переменные */
+  animation-duration: var(--dur, 12s);
+  animation-delay: var(--delay, 0s);
+  transform: translate(0, calc(var(--amp, 12px) * -1));
+}
+/* «кольцо» */
+.bubble.ring { background: transparent; border: 2px solid rgba(145,119,103,.35); }
+/* «мягкая точка» */
+.bubble.soft { background: rgba(145,119,103,.14); border: 0; }
+
+@keyframes bubble-bob {
+  0%   { transform: translate(0, calc(var(--amp) * -1)); }
+  50%  { transform: translate(var(--shift, 8px), var(--amp)); }
+  100% { transform: translate(0, calc(var(--amp) * -1)); }
+}
+/* плавный скролл */
+html { scroll-behavior: smooth; }
+
+/* по центру заголовок/цитата в "Жизнь в садике" */
+.life-inner { text-align: center; }
+
+/* универсальные волны для любых секций */
+.wavy { position: relative; overflow: hidden; }
+.wavy::before,
+.wavy::after{
+  content:""; position:absolute; left:0; right:0; height:160px;
+  background-repeat:no-repeat; background-size:100% 100%; pointer-events:none;
+}
+.wave-top::before{
+  top:0; transform:translateY(-100%);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");
+}
+.wave-bottom::after{
+  bottom:0; transform:translateY(100%) rotate(180deg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");
+}
 
   </style>
 </head>
@@ -392,10 +439,10 @@
       <div class="team-list">
         <article class="member"><div class="avatar"><img class="img" src="media/ol.jpg" alt="Оля"></div><h3 class="name">Это Оля</h3></article>
         <article class="member"><div class="avatar"><img class="img" src="media/al.jpg" alt="Алена"></div><h3 class="name">Это Алена</h3></article>
-        <article class="member"><div class="avatar"><img class="img" src="media/an.jpg" alt="Аня"></div><h3 class="name">Это Аня</h3></article>
-        <article class="member"><div class="avatar"><img class="img" src="media/na.jpg" alt="Настя"></div><h3 class="name">Это Настя</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/an.jpeg" alt="Аня"></div><h3 class="name">Это Аня</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/na.jpeg" alt="Настя"></div><h3 class="name">Это Настя</h3></article>
         <article class="member"><div class="avatar"><img class="img" src="media/ir.jpg" alt="Ира"></div><h3 class="name">Это Ира</h3></article>
-        <article class="member"><div class="avatar"><img class="img" src="media/ma.jpg" alt="Марина"></div><h3 class="name">Это Марина</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/ma.jpeg" alt="Марина"></div><h3 class="name">Это Марина</h3></article>
         <article class="member"><div class="avatar"><img class="img" src="media/di.jpg" alt="Дима"></div><h3 class="name">Это Дима</h3></article>
         <article class="member"><div class="avatar"><img class="img" src="media/na1.jpg" alt="Настя 2"></div><h3 class="name">Это Настя 2</h3></article>
       </div>
@@ -664,5 +711,65 @@
       });
     });
   </script>
+  <script>
+    /* ===== ПУЗЫРЬКИ: автоматическая генерация в секциях ===== */
+    (function(){
+      const sectionIds = ['about','life','team','prices','extras','contacts'];
+      let generated = false;
+    
+      function createBubbles(){
+        // очистка
+        document.querySelectorAll('.bubbles').forEach(el => el.remove());
+        sectionIds.forEach(id=>{
+          const sec = document.getElementById(id);
+          if(!sec) return;
+          sec.classList.add('has-bubbles');
+    
+          const wrap = document.createElement('div');
+          wrap.className = 'bubbles';
+          sec.appendChild(wrap);
+    
+          const base = window.innerWidth > 1200 ? 7 : (window.innerWidth > 680 ? 6 : 5);
+    
+          for(let i=0;i<base;i++){
+            const b = document.createElement('span');
+            b.className = 'bubble ' + (Math.random()<0.55 ? 'ring' : 'soft');
+    
+            const size = Math.round(10 + Math.random()*18);
+            b.style.width = size+'px';
+            b.style.height = size+'px';
+    
+            b.style.left = (4 + Math.random()*92) + '%';
+            b.style.top  = (6 + Math.random()*84) + '%';
+    
+            const amp = (10 + Math.random()*16) | 0;
+            const shift = (Math.random()<.5?-1:1) * (6 + Math.random()*14);
+            b.style.setProperty('--amp', amp+'px');
+            b.style.setProperty('--shift', shift+'px');
+    
+            const dur = (9 + Math.random()*10).toFixed(1)+'s';
+            const delay = (-Math.random()*parseFloat(dur)).toFixed(1)+'s';
+            b.style.setProperty('--dur', dur);
+            b.style.setProperty('--delay', delay);
+    
+            wrap.appendChild(b);
+          }
+        });
+        generated = true;
+      }
+    
+      // первичный запуск
+      createBubbles();
+    
+      // дебаунс на ресайз
+      let t;
+      window.addEventListener('resize', ()=>{
+        if(!generated) return;
+        clearTimeout(t);
+        t = setTimeout(createBubbles, 350);
+      });
+    })();
+    </script>
+    
 </body>
 </html>
