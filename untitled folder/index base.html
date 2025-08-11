@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>СТИХИЯ — детский сад</title>
+  <meta name="color-scheme" content="light only" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --beige:#e2d7ba;  /* верхняя крупная полоса */
+      --sand:#bab193;   /* нижняя тонкая полоса */
+      --brown:#917767;  /* фирменный тёплый */
+      --text:#777777;   /* ГЛОБАЛЬНЫЙ цвет текста */
+      --white:#ffffff;
+      --soft:#eff1f3;   /* фон блока Жизнь */
+    }
+
+    /* Сброс и базовые */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--text);background:#fff}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    .container{max-width:1200px;margin-inline:auto;padding:0 20px}
+
+    /* Верхняя полоса с НАВИГАЦИЕЙ */
+    .top-band{background:var(--beige)}
+    .top-band .nav{display:flex;align-items:center;gap:16px;min-height:96px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    /* Увеличили logo-no.png в 3 раза */
+    .brand img.icon{width:164px;height:84px;object-fit:contain}
+    /* Вместо текста — картинка lo.png */
+    .brand img.wordmark{height:51px;width:auto}
+
+    .spacer{flex:1}
+    .nav-links{display:flex;align-items:center;gap:18px}
+    .nav-links a{padding:10px 12px;border-radius:10px;font-weight:600;line-height:1}
+    .nav-links a:hover{background:rgba(0,0,0,.05)}
+
+    /* Бургер на мобиле */
+    .burger{display:none;border:0;background:transparent;padding:10px;margin:-10px}
+    .burger span{display:block;width:24px;height:2px;background:#3a3a3a;margin:5px 0}
+
+    @media (max-width:880px){
+      .nav-links{display:none}
+      .burger{display:block}
+      .brand img.wordmark{height:26px}
+      
+    }
+
+    /* Нижняя полоса в 3 раза тоньше */
+    .nav-band{background:var(--sand);height:18px;border-bottom:1px solid rgba(0,0,0,.06)}
+
+    /* Мобильное меню */
+    .mobile-menu{display:none;background:var(--beige);border-top:1px solid rgba(0,0,0,.06)}
+    .mobile-menu.open{display:block}
+    .mobile-menu .menu-inner{display:grid;gap:6px;padding:10px 20px}
+    .mobile-menu a{padding:10px 14px;border-radius:12px;font-weight:600}
+    .mobile-menu a:hover{background:rgba(0,0,0,.05)}
+
+    /* HERO с видео-фоном на весь экран */
+    .hero{position:relative;isolation:isolate;min-height:100svh}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+    .hero::after{ /* затемнение */
+      content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.42));z-index:-1
+    }
+    .hero-inner{position:relative;display:grid;place-items:center;min-height:100svh;padding:80px 20px}
+
+    .big-logo{max-width:min(640px,80vw);filter:drop-shadow(0 6px 20px rgba(0,0,0,.25))}
+
+    /* Полосы/волны: нижняя — белая, над ней — серая полупрозрачная */
+    .waves{position:absolute;left:0;right:0;bottom:-1px;height:200px;pointer-events:none}
+    .waves svg{width:100%;height:100%;display:block}
+
+    /* Секция "О нас" */
+    section{scroll-margin-top:90px}
+    .about{padding:72px 20px}
+    .about .wrap{display:grid;grid-template-columns:520px 1fr;gap:40px;align-items:center}
+    .about .title{font-weight:700;letter-spacing:.08em;color:var(--#e1d4c9);text-transform:uppercase;margin:0 0 10px;font-size:clamp(16px,2.3vw,18px)}
+    .about .subtitle{font-weight:800;color:var(--#e1d4c9);margin:0 0 22px;font-size:clamp(28px,4vw,42px)}
+
+    .about .text{max-width:62ch;margin:0;text-align:left}
+    .about .text p{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);margin:0 0 16px}
+    .about .text ul{list-style:none;padding:0;margin:10px 0 0}
+    .about .text li{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);padding-left:18px;position:relative;margin:6px 0}
+    .about .text li::before{content:"–";position:absolute;left:0;top:0}
+
+    .photo-wrap{position:relative}
+    .photo{border-radius:16px;overflow:hidden}
+
+    .dot{position:absolute;border-radius:999px;will-change:transform}
+    .dot.r1{width:14px;height:14px;border:2px solid var(--brown);top:-10px;left:18px}
+    .dot.r2{width:16px;height:16px;border:2px solid var(--brown);right:-10px;top:40%}
+    .dot.r3{width:12px;height:12px;border:2px solid var(--brown);bottom:-12px;left:35%}
+    .dot.f1{width:18px;height:18px;background:rgba(145,119,103,.12);top:14%;left:-12px}
+    .dot.f2{width:22px;height:22px;background:rgba(145,119,103,.22);bottom:20%;right:-16px}
+    .dot.f3{width:10px;height:10px;background:rgba(145,119,103,.32);top:55%;left:30%}
+
+    @media (max-width:960px){
+      .about .wrap{grid-template-columns:1fr;gap:28px}
+      .photo{max-width:520px;margin-inline:auto}
+    }
+
+    /* Жизнь в садике */
+    .life{position:relative;background:var(--soft);padding:100px 0;overflow:hidden}
+    .life-inner{position:relative;z-index:2}
+    .life-title{font-weight:200;font-size:clamp(28px,4vw,42px);color:var(--text);margin:0 0 10px}
+    .life-quote{font-size:14px;color:var(--text);margin:0 0 28px}
+    .life-quote .author{opacity:.85}
+
+    /* Две строки по 300px */
+    .life-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,300px);grid-auto-columns:300px;gap:16px;justify-content:center}
+    .life-grid .sq{width:300px;height:300px;object-fit:cover;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+
+    /* Белые волны внутри секции (поверх фона) */
+    .life-waves{position:absolute;left:0;right:0;height:160px;pointer-events:none;z-index:1}
+    .life-waves.top{top:0}
+    .life-waves.bottom{bottom:0;transform:rotate(180deg)}
+
+    /* Две полусферы в каждом углу (с лёгким смещением) */
+    .semis{position:absolute;pointer-events:none;z-index:0}
+    .semis.top-left{top:10px;left:10px}
+    .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
+    .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(145,119,103,.25);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
+    .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.25}
+    /* НАША КОМАНДА — фон #917767, белый текст, волны сверху/снизу */
+.team{position:relative;background:var(--brown);color:#fff;overflow:hidden}
+.team::before,.team::after{content:"";position:absolute;left:0;right:0;height:160px;pointer-events:none;z-index:1;background-repeat:no-repeat;background-size:100% 100%}
+.team::before{top:0;transform:translateY(-100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");}
+.team::after{bottom:0;transform:translateY(100%) rotate(180deg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");}
+.team-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:100px 20px;text-align:center}
+.team .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.95;margin:0 0 8px}
+.team .headline{font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 14px}
+.team .sub{font-size:14px;opacity:.95;max-width:75ch;margin:0 auto 36px}
+/* Сетка 2 строки по 4 кружка */
+.team-list{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 20px;justify-items:center}
+@media (max-width:960px){.team-list{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.team-list{grid-template-columns:1fr}}
+.member{display:flex;flex-direction:column;align-items:center}
+/* Аватар с дублером-блюром */
+.avatar {
+  position: relative;
+  width: 200px;
+  height: 260px;
+  border-radius: 16px; /* закруглённые углы */
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+/* Полусферы на тёмном фоне */
+.team .semis{position:absolute;pointer-events:none;z-index:0}
+.team .semis.top-left{top:10px;left:10px}
+.team .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
+.team .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(255,255,255,.28);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
+.team .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.35}
+  </style>
+</head>
+<body>
+  <!-- ВЕРХНЯЯ ПОЛОСА С НАВИГАЦИЕЙ -->
+  <div class="top-band">
+    <div class="container">
+      <div class="nav" role="navigation" aria-label="Главная навигация">
+        <a class="brand" href="#" aria-label="СТИХИЯ — на главную">
+          <img class="icon" src="media/logo-no.png" alt="Знак" />
+          <img class="wordmark" src="media/lo.png" alt="СТИХИЯ" />
+        </a>
+        <div class="spacer" aria-hidden="true"></div>
+        <nav class="nav-links" aria-label="Разделы">
+          <a href="#about">О нас</a>
+          <a href="#team">Команда</a>
+          <a href="#prices">Цены</a>
+          <a href="#extras">Допы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <button class="burger" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- НИЖНЯЯ ТОНКАЯ ПОЛОСА -->
+  <div class="nav-band" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <video autoplay muted loop playsinline preload="metadata" poster="media/back-fallback.jpg">
+      <source src="media/back.mp4" type="video/mp4" />
+      Ваш браузер не поддерживает видео.
+    </video>
+
+    <div class="hero-inner container">
+      <img class="big-logo" src="media/logo.png" alt="СТИХИЯ" />
+    </div>
+
+    <!-- Две волны: нижняя белая, верхняя серая -->
+    <div class="waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+        <path d="M0,90 C240,60 420,110 720,78 C980,58 1200,102 1440,70 L1440,200 L0,200 Z" fill="rgba(153,153,153,.25)"/>
+        <path d="M0,120 C240,90 420,130 720,98 C980,78 1200,122 1440,90 L1440,200 L0,200 Z" fill="#ffffff"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- О НАС -->
+  <section id="about" class="about">
+    <div class="container wrap">
+      <div class="photo-wrap">
+        <img class="photo" src="media/about.png" alt="О нашем саде" />
+        <span class="dot r1" aria-hidden="true"></span>
+        <span class="dot r2" aria-hidden="true"></span>
+        <span class="dot r3" aria-hidden="true"></span>
+        <span class="dot f1" aria-hidden="true"></span>
+        <span class="dot f2" aria-hidden="true"></span>
+        <span class="dot f3" aria-hidden="true"></span>
+      </div>
+      <div class="text">
+        <div class="title">О НАС</div>
+        <div class="subtitle">Реджио-детский сад</div>
+        <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия, спустя несколько десятилетий получил признание во всем мире. Это новый образ мышления, где все дети считаются носителями потенциала и возможностей, где каждый ребёнок- исследователь и равноправный участник педагогического процесса. Реджио-педагогика считается одним из самых перспективных направлений развития детей нового поколения и включает в себя:</p>
+        <ul>
+          <li>Гуманный подход;</li>
+          <li>Средовую педагогику (среда, пространство, отношения);</li>
+          <li>Педагогику слушания;</li>
+          <li>Принцип «100 языков ребёнка» (предоставление самых разнообразных возможностей для детей выразить себя);</li>
+          <li>Проектирование и организация;</li>
+          <li>Кооперацию и работу в микро-группах;</li>
+          <li>Рефлексия (документирования наблюдений);</li>
+          <li>Развитие креативного мышления и другие Soft-skill навыки.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Жизнь в садике -->
+  <section id="life" class="life">
+    <!-- Верхние белые волны -->
+    <div class="life-waves top" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z" fill="#ffffff"/>
+        <path d="M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z" fill="rgba(255,255,255,.7)"/>
+      </svg>
+    </div>
+
+    <div class="container life-inner">
+      <h2 class="life-title">Жизнь в садике</h2>
+      <p class="life-quote">«Обсуждая с мужем пришли к выводу, что это лучшее место куда мог попасть наш ребёнок». <span class="author">Александра (мама Камиля).</span></p>
+      <div class="life-grid">
+        <img src="media/block1.jpg" alt="" class="sq" />
+        <img src="media/block3.jpg" alt="" class="sq" />
+        <img src="media/block4.jpg" alt="" class="sq" />
+        <img src="media/block5.jpg" alt="" class="sq" />
+        <img src="media/block6.jpg" alt="" class="sq" />
+        <img src="media/block7.jpg" alt="" class="sq" />
+        <img src="media/block8.jpg" alt="" class="sq" />
+        <img src="media/block9.jpg" alt="" class="sq" />
+      </div>
+    </div>
+
+    <!-- Нижние белые волны -->
+    <div class="life-waves bottom" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z" fill="#ffffff"/>
+        <path d="M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z" fill="rgba(255,255,255,.7)"/>
+      </svg>
+    </div>
+
+    <!-- По две полусферы в каждом углу -->
+    <div class="semis top-left" aria-hidden="true">
+      <span class="semi first"></span>
+      <span class="semi second"></span>
+    </div>
+    <div class="semis bottom-right" aria-hidden="true">
+      <span class="semi first"></span>
+      <span class="semi second"></span>
+    </div>
+  </section>
+<!-- НАША КОМАНДА -->
+<!-- НАША КОМАНДА -->
+<section id="team" class="team">
+  <div class="team-inner">
+    <div class="eyebrow">НАША КОМАНДА</div>
+    <h2 class="headline">Любовь во всём, что мы делаем</h2>
+    <p class="sub">Чтобы ВОСПИТЫВАТЬ детей, мы постоянно НАПИТЫВАЕМ себя новыми знаниями, практиками, инструментами, ведь ОБРАЗование создается от слова «ОБРАЗ».</p>
+
+    <div class="team-list">
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/ol.jpg" alt="Оля">
+        </div>
+        <h3 class="name">Это Оля</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/al.jpg" alt="Алена">
+        </div>
+        <h3 class="name">Это Алена</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/an.jpg" alt="Аня">
+        </div>
+        <h3 class="name">Это Аня</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/na.jpg" alt="Настя">
+        </div>
+        <h3 class="name">Это Настя</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/ir.jpg" alt="Ира">
+        </div>
+        <h3 class="name">Это Ира</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/ma.jpg" alt="Марина">
+        </div>
+        <h3 class="name">Это Марина</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/di.jpg" alt="Дима">
+        </div>
+        <h3 class="name">Это Дима</h3>
+      </article>
+    
+      <article class="member">
+        <div class="avatar">
+          <img class="img" src="media/na1.jpg" alt="Настя 2">
+        </div>
+        <h3 class="name">Это Настя 2</h3>
+      </article>
+    </div>
+    
+  </div>
+
+  <!-- полусферы для раздела команды -->
+  <div class="semis top-left" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
+  <div class="semis bottom-right" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
+</section>
+
+
+  <script>
+    // Бургер
+    const burger = document.querySelector('.burger');
+    const mobile = document.getElementById('mobile-menu');
+    function toggleMenu(){
+      const opened = mobile.classList.toggle('open');
+      burger.setAttribute('aria-expanded', opened);
+      mobile.hidden = !opened;
+    }
+    burger?.addEventListener('click', toggleMenu);
+
+    // Защита от автопаузы видео в некоторых браузерах
+    const vid = document.querySelector('.hero video');
+    if (vid) {
+      const tryPlay = () => vid.play().catch(()=>{});
+      document.addEventListener('visibilitychange', tryPlay, {passive:true});
+      window.addEventListener('focus', tryPlay, {passive:true});
+    }
+
+    // Микропараллакс для кружочков при скролле
+    const dots = Array.from(document.querySelectorAll('.photo-wrap .dot'));
+    const speeds = dots.map((_,i)=> (i%3===0? 0.25 : i%3===1? 0.4 : 0.6));
+    let ticking=false;
+    function onScroll(){
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const y=window.scrollY||window.pageYOffset;
+          dots.forEach((el,idx)=>{
+            const dy=Math.sin((y+idx*80)/500)*10 * speeds[idx];
+            el.style.transform=`translateY(${dy.toFixed(1)}px)`;
+          });
+          ticking=false;
+        });
+        ticking=true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+    // Анимация появления карточек команды
+const members = document.querySelectorAll('.member');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.25});
+members.forEach(m=>io.observe(m));
+  </script>
+</body>
+</html>

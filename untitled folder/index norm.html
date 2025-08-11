@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>СТИХИЯ — детский сад</title>
+  <meta name="color-scheme" content="light only" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --beige:#e2d7ba;  /* верхняя крупная полоса */
+      --sand:#bab193;   /* нижняя тонкая полоса */
+      --brown:#917767;  /* фирменный тёплый */
+      --text:#777777;   /* ГЛОБАЛЬНЫЙ цвет текста */
+      --white:#ffffff;
+      --soft:#eff1f3;   /* фон блока Жизнь */
+      --wave-h:160px;   /* высота волн */
+      --wave-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160' preserveAspectRatio='none'%3E%3Cpath d='M0,70 C260,40 420,100 720,68 C1000,46 1200,96 1440,64 L1440,160 L0,160 Z' fill='%23ffffff'/%3E%3Cpath d='M0,110 C240,80 420,120 720,88 C980,68 1200,112 1440,80 L1440,160 L0,160 Z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");
+    }
+
+    /* Плавный скролл */
+    html{scroll-behavior:smooth}
+
+    /* Сброс и базовые */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--text);background:#fff}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{max-width:1200px;margin-inline:auto;padding:0 20px}
+
+    /* Верхняя полоса с НАВИГАЦИЕЙ */
+    .top-band{background:var(--beige)}
+    .top-band .nav{display:flex;align-items:center;gap:16px;min-height:96px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img.icon{width:164px;height:84px;object-fit:contain}
+    .brand img.wordmark{height:51px;width:auto}
+    .spacer{flex:1}
+    .nav-links{display:flex;align-items:center;gap:18px}
+    .nav-links a{padding:10px 12px;border-radius:10px;font-weight:600;line-height:1}
+    .nav-links a:hover{background:rgba(0,0,0,.05)}
+
+    /* Бургер на мобиле */
+    .burger{display:none;border:0;background:transparent;padding:10px;margin:-10px}
+    .burger span{display:block;width:24px;height:2px;background:#3a3a3a;margin:5px 0}
+    @media (max-width:880px){
+      .nav-links{display:none}
+      .burger{display:block}
+      .brand img.wordmark{height:26px}
+    }
+
+    /* Нижняя полоса */
+    .nav-band{background:var(--sand);height:18px;border-bottom:1px solid rgba(0,0,0,.06)}
+
+    /* Мобильное меню */
+    .mobile-menu{display:none;background:var(--beige);border-top:1px solid rgba(0,0,0,.06)}
+    .mobile-menu.open{display:block}
+    .mobile-menu .menu-inner{display:grid;gap:6px;padding:10px 20px}
+    .mobile-menu a{padding:10px 14px;border-radius:12px;font-weight:600}
+    .mobile-menu a:hover{background:rgba(0,0,0,.05)}
+
+    /* Универсальные волны-разделители */
+    .sep{position:absolute;left:0;right:0;height:var(--wave-h);pointer-events:none;z-index:1;
+         background-repeat:no-repeat;background-size:100% 100%;background-image:var(--wave-img)}
+    .sep.top{top:0;transform:translateY(-100%) rotate(180deg)}
+    .sep.bottom{bottom:0;transform:translateY(100%)}
+
+    /* HERO */
+    .hero{position:relative;isolation:isolate;min-height:100svh}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(.9)} /* -10% яркости */
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.42));z-index:-1}
+    .hero-inner{position:relative;display:grid;place-items:center;min-height:100svh;padding:80px 20px}
+    .big-logo{max-width:min(640px,80vw);filter:drop-shadow(0 6px 20px rgba(0,0,0,.25))}
+    /* старая волна под видео оставляем */
+    .waves{position:absolute;left:0;right:0;bottom:-1px;height:200px;pointer-events:none}
+    .waves svg{width:100%;height:100%;display:block}
+
+    /* О нас */
+    section{scroll-margin-top:90px}
+    .about{position:relative;padding:72px 20px;overflow:hidden}
+    .about .wrap{display:grid;grid-template-columns:520px 1fr;gap:40px;align-items:center}
+    .about .title{font-weight:700;letter-spacing:.08em;color:#9c8f7f;text-transform:uppercase;margin:0 0 10px;font-size:clamp(16px,2.3vw,18px)}
+    .about .subtitle{font-weight:800;color:#584b40;margin:0 0 22px;font-size:clamp(28px,4vw,42px)}
+    .about .text{max-width:62ch;margin:0;text-align:left}
+    .about .text p{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);margin:0 0 16px}
+    .about .text ul{list-style:none;padding:0;margin:10px 0 0}
+    .about .text li{font-family:Georgia, "Times New Roman", serif;color:var(--text);line-height:1.7;font-size:clamp(16px,2.2vw,19px);padding-left:18px;position:relative;margin:6px 0}
+    .about .text li::before{content:"–";position:absolute;left:0;top:0}
+    .photo-wrap{position:relative}
+    .photo{border-radius:16px;overflow:hidden}
+    .dot{position:absolute;border-radius:999px;will-change:transform}
+    .dot.r1{width:14px;height:14px;border:2px solid var(--brown);top:-10px;left:18px}
+    .dot.r2{width:16px;height:16px;border:2px solid var(--brown);right:-10px;top:40%}
+    .dot.r3{width:12px;height:12px;border:2px solid var(--brown);bottom:-12px;left:35%}
+    .dot.f1{width:18px;height:18px;background:rgba(145,119,103,.12);top:14%;left:-12px}
+    .dot.f2{width:22px;height:22px;background:rgba(145,119,103,.22);bottom:20%;right:-16px}
+    .dot.f3{width:10px;height:10px;background:rgba(145,119,103,.32);top:55%;left:30%}
+    @media (max-width:960px){
+      .about .wrap{grid-template-columns:1fr;gap:28px}
+      .photo{max-width:520px;margin-inline:auto}
+    }
+
+    /* Жизнь (между волнами) */
+    .life{position:relative;background:var(--soft);padding:100px 0 120px;overflow:hidden}
+    .life-inner{position:relative;z-index:2;text-align:center}
+    .life-title{font-weight:800;font-size:clamp(28px,4vw,44px);color:var(--text);margin:0 0 10px}
+    .life-quote{font-size:16px;max-width:70ch;margin:0 auto 28px}
+    .life-quote .author{opacity:.85}
+    .life-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,300px);grid-auto-columns:300px;gap:16px;justify-content:center}
+    .life-grid .sq{width:300px;height:300px;object-fit:cover;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+
+    /* Декор-полусферы */
+    .semis{position:absolute;pointer-events:none;z-index:0}
+    .semis.top-left{top:10px;left:10px}
+    .semis.bottom-right{right:10px;bottom:10px;transform:rotate(180deg)}
+    .semi{position:absolute;display:block;width:200px;height:100px;border:1px solid rgba(145,119,103,.25);border-bottom:none;border-radius:200px 200px 0 0;background:transparent}
+    .semi.second{width:240px;height:120px;left:16px;top:12px;opacity:.25}
+
+    /* Команда (между волнами) */
+    .team{position:relative;background:var(--brown);color:#fff;overflow:hidden}
+    .team-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:120px 20px 140px;text-align:center}
+    .team .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.95;margin:0 0 12px}
+    .team .headline{font-weight:800;font-size:clamp(56px,8vw,88px);line-height:1.05;margin:0 0 18px} /* крупнее */
+    .team .sub{font-size:clamp(18px,2.6vw,28px);opacity:.95;max-width:90ch;margin:0 auto 44px}
+    .team-list{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 20px;justify-items:center}
+    @media (max-width:960px){.team-list{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:520px){.team-list{grid-template-columns:1fr}}
+    .member{display:flex;flex-direction:column;align-items:center}
+    .avatar{position:relative;width:200px;height:260px;border-radius:16px;overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block}
+
+    /* Цены */
+    .prices{position:relative;background:#fff;padding:110px 0 140px;overflow:hidden}
+    .prices h2{font-weight:800;font-size:clamp(34px,5vw,56px);text-align:center;margin:0 0 10px}
+    .prices .note{max-width:80ch;margin:0 auto 44px;text-align:center;opacity:.8}
+    .price-panel{max-width:1240px;margin:0 auto;border-radius:24px;background:#fff;padding:36px 26px 40px;box-shadow:0 40px 90px rgba(0,0,0,.08),0 4px 20px rgba(0,0,0,.05)}
+    .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+    @media (max-width:1050px){.price-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.price-grid{grid-template-columns:1fr}}
+    .tariff{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.06);display:flex;flex-direction:column;min-height:520px}
+    .tariff .head{background:#eef0f3;color:#9aa0a6;text-transform:uppercase;letter-spacing:.18em;font-weight:700;text-align:center;padding:24px 16px;font-size:14px}
+    .tariff .body{padding:36px 28px 28px;display:grid;gap:18px;justify-items:center;text-align:center;flex:1}
+    .price{font-weight:800;font-size:clamp(28px,3.6vw,40px);color:#111}
+    .period{font-weight:800;text-transform:uppercase;letter-spacing:.12em;opacity:.7}
+    .desc{opacity:.8}
+    .btn-enroll{margin-top:auto;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 26px;border-radius:12px;border:0;background:#232529;color:#fff;font-weight:800;cursor:pointer}
+    .btn-enroll:hover{filter:brightness(1.05)}
+    .tariff--featured{transform:translateY(-18px);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+    .tariff--featured .head{background:var(--brown);color:#fff}
+    .tariff--featured .btn-enroll{background:var(--brown)}
+
+    /* Допы */
+    .extras{position:relative;background:#f0f1f3;padding:90px 0 120px;overflow:hidden}
+    .extras .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin:0 0 8px;text-align:center}
+    .extras .headline{font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 10px;text-align:center;color:#232529}
+    .extras .sub{font-size:14px;opacity:.9;max-width:75ch;margin:0 auto 36px;text-align:center}
+    .extras-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    @media (max-width:900px){ .extras-grid{grid-template-columns:1fr} }
+    .extra-card{position:relative;border-radius:16px;overflow:hidden;background:#ddd;aspect-ratio:3/4;box-shadow:0 6px 24px rgba(0,0,0,.08);cursor:pointer;transform:translateZ(0)}
+    .extra-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s ease, filter .6s ease, opacity .6s ease}
+    .extra-title{position:absolute;left:18px;right:18px;bottom:18px;color:#fff;font-weight:800;font-size:clamp(18px,2vw,28px);text-shadow:0 2px 10px rgba(0,0,0,.35);line-height:1.15}
+    .extra-reveal{position:absolute;inset:0;background:#cbc7c1;color:#232529;padding:18px;overflow:auto;transform:rotateY(-180deg);backface-visibility:hidden;transition:transform .6s ease, opacity .6s ease;opacity:0}
+    .extra-reveal h3{margin:0 0 10px;font-size:18px;font-weight:800}
+    .extra-reveal p{margin:0 0 10px;font-size:14px;line-height:1.6}
+    .extra-reveal ul{margin:6px 0 12px 18px}
+    .extra-reveal li{margin:3px 0;font-size:14px;line-height:1.5}
+    .extra-card:hover .extra-bg,.extra-card.open .extra-bg{transform:scale(1.04);filter:grayscale(.1) contrast(.96)}
+    .extra-card:hover .extra-reveal,.extra-card.open .extra-reveal{transform:rotateY(0);opacity:1}
+    .extra-card:hover .extra-title,.extra-card.open .extra-title{opacity:0}
+
+    /* Контакты */
+    .contacts{position:relative;background:#232529;color:#fff;padding:90px 0 120px;overflow:hidden}
+    .contacts .container{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start}
+    @media (max-width:980px){ .contacts .container{grid-template-columns:1fr;gap:18px} }
+    .map-wrap{border-radius:18px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.24);min-height:420px;background:#111}
+    .map-wrap iframe{width:100%;height:100%;border:0;display:block;min-height:420px}
+    .contacts h2{font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.1;margin:6px 0 12px}
+    .small{opacity:.85;font-size:12px}
+    .info-list{display:grid;gap:14px}
+    .info-item{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+    .info-item svg{width:20px;height:20px;margin-top:3px;opacity:.9;flex:0 0 auto}
+    .info-item a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35)}
+    .info-item a:hover{ text-decoration-color:#fff }
+    .footer-line{opacity:.65;font-size:12px;margin-top:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+    /* ===== ПУЗЫРЬКИ / ДЕКОР В РАЗДЕЛАХ ===== */
+.has-bubbles { position: relative; overflow: hidden; }
+.has-bubbles > * { position: relative; z-index: 2; } /* контент поверх пузырьков */
+.bubbles {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0; /* ниже контента, выше фона */
+}
+.bubble {
+  position: absolute; border-radius: 999px; will-change: transform;
+  animation-name: bubble-bob; animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  /* параметры будут задаваться через CSS-переменные */
+  animation-duration: var(--dur, 12s);
+  animation-delay: var(--delay, 0s);
+  transform: translate(0, calc(var(--amp, 12px) * -1));
+}
+/* «кольцо» */
+.bubble.ring { background: transparent; border: 2px solid rgba(145,119,103,.35); }
+/* «мягкая точка» */
+.bubble.soft { background: rgba(145,119,103,.14); border: 0; }
+
+@keyframes bubble-bob {
+  0%   { transform: translate(0, calc(var(--amp) * -1)); }
+  50%  { transform: translate(var(--shift, 8px), var(--amp)); }
+  100% { transform: translate(0, calc(var(--amp) * -1)); }
+}
+
+  </style>
+</head>
+<body>
+  <!-- ВЕРХНЯЯ ПОЛОСА -->
+  <div class="top-band">
+    <div class="container">
+      <div class="nav" role="navigation" aria-label="Главная навигация">
+        <a class="brand" href="#" aria-label="СТИХИЯ — на главную">
+          <img class="icon" src="media/logo-no.png" alt="Знак" />
+          <img class="wordmark" src="media/lo.png" alt="СТИХИЯ" />
+        </a>
+        <div class="spacer" aria-hidden="true"></div>
+        <nav class="nav-links" aria-label="Разделы">
+          <a href="#about">О нас</a>
+          <a href="#life">Жизнь</a>
+          <a href="#team">Команда</a>
+          <a href="#prices">Цены</a>
+          <a href="#extras">Допы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <button class="burger" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-band" aria-hidden="true"></div>
+
+  <!-- Мобильное меню -->
+  <nav id="mobile-menu" class="mobile-menu" hidden>
+    <div class="menu-inner container">
+      <a href="#about">О нас</a>
+      <a href="#life">Жизнь</a>
+      <a href="#team">Команда</a>
+      <a href="#prices">Цены</a>
+      <a href="#extras">Допы</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <video autoplay muted loop playsinline preload="metadata" poster="media/back-fallback.jpg">
+      <source src="media/back.mp4" type="video/mp4" />
+      Ваш браузер не поддерживает видео.
+    </video>
+    <div class="hero-inner container">
+      <img class="big-logo" src="media/logo.png" alt="СТИХИЯ" />
+    </div>
+    <!-- исходная волна под видео -->
+    <div class="waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+        <path d="M0,90 C240,60 420,110 720,78 C980,58 1200,102 1440,70 L1440,200 L0,200 Z" fill="rgba(153,153,153,.25)"/>
+        <path d="M0,120 C240,90 420,130 720,98 C980,78 1200,122 1440,90 L1440,200 L0,200 Z" fill="#ffffff"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- О НАС -->
+  <section id="about" class="about">
+    <div class="container wrap">
+      <div class="photo-wrap">
+        <img class="photo" src="media/about.png" alt="О нашем саде" />
+        <span class="dot r1" aria-hidden="true"></span>
+        <span class="dot r2" aria-hidden="true"></span>
+        <span class="dot r3" aria-hidden="true"></span>
+        <span class="dot f1" aria-hidden="true"></span>
+        <span class="dot f2" aria-hidden="true"></span>
+        <span class="dot f3" aria-hidden="true"></span>
+      </div>
+      <div class="text">
+        <div class="title">О НАС</div>
+        <div class="subtitle">Реджио-детский сад</div>
+        <p>Подход возник в послевоенной Италии в городке Реджио-Эмилия, спустя несколько десятилетий получил признание во всем мире. Это новый образ мышления, где все дети считаются носителями потенциала и возможностей, где каждый ребёнок- исследователь и равноправный участник педагогического процесса. Реджио-педагогика считается одним из самых перспективных направлений развития детей нового поколения и включает в себя:</p>
+        <ul>
+          <li>Гуманный подход;</li>
+          <li>Средовую педагогику (среда, пространство, отношения);</li>
+          <li>Педагогику слушания;</li>
+          <li>Принцип «100 языков ребёнка» (предоставление самых разнообразных возможностей для детей выразить себя);</li>
+          <li>Проектирование и организация;</li>
+          <li>Кооперацию и работу в микро-группах;</li>
+          <li>Рефлексия (документирования наблюдений);</li>
+          <li>Развитие креативного мышления и другие Soft-skill навыки.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- ЖИЗНЬ -->
+  <section id="life" class="life">
+    <div class="sep top" aria-hidden="true"></div>
+    <div class="container life-inner">
+      <h2 class="life-title">Жизнь в садике</h2>
+      <p class="life-quote">«Обсуждая с мужем пришли к выводу, что это лучшее место куда мог попасть наш ребёнок». <span class="author">Александра (мама Камиля).</span></p>
+      <div class="life-grid">
+        <img src="media/block1.jpg" alt="" class="sq" />
+        <img src="media/block3.jpg" alt="" class="sq" />
+        <img src="media/block4.jpg" alt="" class="sq" />
+        <img src="media/block5.jpg" alt="" class="sq" />
+        <img src="media/block6.jpg" alt="" class="sq" />
+        <img src="media/block7.jpg" alt="" class="sq" />
+        <img src="media/block8.jpg" alt="" class="sq" />
+        <img src="media/block9.jpg" alt="" class="sq" />
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+    <div class="semis top-left" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
+    <div class="semis bottom-right" aria-hidden="true"><span class="semi first"></span><span class="semi second"></span></div>
+  </section>
+
+  <!-- КОМАНДА -->
+  <section id="team" class="team">
+    <div class="sep top" aria-hidden="true"></div>
+    <div class="team-inner">
+      <div class="sub">Наша команда</div>
+      <h2 class="sub">Любовь во всём, что мы делаем</h2>
+      <p class="eyebrow">Чтобы воспитывать детей, мы постоянно напитываем себя новыми знаниями, практиками, инструментами, ведь образование создается от слова образ.</p>
+
+      <div class="team-list">
+        <article class="member"><div class="avatar"><img class="img" src="media/ol.jpg" alt="Оля"></div><h3 class="name">Это Оля</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/al.jpg" alt="Алена"></div><h3 class="name">Это Алена</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/an.jpg" alt="Аня"></div><h3 class="name">Это Аня</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/na.jpg" alt="Настя"></div><h3 class="name">Это Настя</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/ir.jpg" alt="Ира"></div><h3 class="name">Это Ира</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/ma.jpg" alt="Марина"></div><h3 class="name">Это Марина</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/di.jpg" alt="Дима"></div><h3 class="name">Это Дима</h3></article>
+        <article class="member"><div class="avatar"><img class="img" src="media/na1.jpg" alt="Настя 2"></div><h3 class="name">Это Настя 2</h3></article>
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- ЦЕНЫ -->
+  <section id="prices" class="prices">
+    <div class="sep top" aria-hidden="true"></div>
+    <div class="container">
+      <h2>Стоимость посещения</h2>
+      <p class="note">Наличие свободных мест и актуальные цены просим уточнять у сотрудников по указанным контактным данным.</p>
+      <div class="price-panel">
+        <div class="price-grid">
+          <article class="tariff">
+            <div class="head">3 раза в неделю</div>
+            <div class="body">
+              <div class="price">₽33000</div>
+              <div class="period">1 месяц</div>
+              <div class="desc">Полный день</div>
+              <a class="btn-enroll" href="#contacts">Записаться</a>
+            </div>
+          </article>
+          <article class="tariff">
+            <div class="head">4 раза в неделю</div>
+            <div class="body">
+              <div class="price">₽38000</div>
+              <div class="period">1 месяц</div>
+              <div class="desc">Полный день</div>
+              <a class="btn-enroll" href="#contacts">Записаться</a>
+            </div>
+          </article>
+          <article class="tariff tariff--featured" aria-label="Рекомендуемый тариф">
+            <div class="head">5 раз в неделю</div>
+            <div class="body">
+              <div class="price">₽45500</div>
+              <div class="period">1 месяц</div>
+              <div class="desc">Полный день</div>
+              <a class="btn-enroll" href="#contacts">Записаться</a>
+            </div>
+          </article>
+          <article class="tariff">
+            <div class="head">Ежедневное</div>
+            <div class="body">
+              <div class="price">₽31500</div>
+              <div class="period">1 месяц</div>
+              <div class="desc">Полдня</div>
+              <a class="btn-enroll" href="#contacts">Записаться</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- ДОПЫ -->
+  <section id="extras" class="extras">
+    <div class="sep top" aria-hidden="true"></div>
+    <div class="container">
+      <div class="eyebrow">НАШИ ПРОГРАММЫ</div>
+      <h2 class="headline">Дополнительные занятия и мероприятия</h2>
+      <p class="sub">Наведите или нажмите на карточку, чтобы увидеть подробности.</p>
+
+      <div class="extras-grid">
+        <article class="extra-card" data-card>
+          <div class="extra-bg" style="background-image:url('media/toddler2.png')"></div>
+          <div class="extra-title">Группы для тоддлеров<br>(Мама, Папа и малыш 1–3 года)</div>
+          <div class="extra-reveal">
+            <h3>Когда?</h3>
+            <p>Каждую субботу с 10:00 до 12:00</p>
+            <p><strong>Это отличная возможность:</strong></p>
+            <p><em>Для родителей:</em></p>
+            <ul>
+              <li>познакомиться с подходом и нашими ценностями;</li>
+              <li>познакомиться с пространством;</li>
+              <li>приятно провести время с ребёнком, попить чай в компании единомышленников.</li>
+            </ul>
+            <p><em>Для детей:</em></p>
+            <ul>
+              <li>мягкая адаптация к пространству;</li>
+              <li>сенсорно-моторный, эмоциональный, двигательный, творческий опыт;</li>
+              <li>мягкая социализация.</li>
+            </ul>
+            <p><strong>Ведущая группы:</strong><br>
+              Аннета Межерицкая — методист и ательерист Семейного пространства «Стихия». Клинический психолог, игровой терапевт и преподаватель игровой терапии. Реджио-энтузиаст с 2016 года.</p>
+            <p><strong>Стоимость занятия:</strong> 1500₽</p>
+          </div>
+        </article>
+
+        <article class="extra-card" data-card>
+          <div class="extra-bg" style="background-image:url('media/holiday.jpg')"></div>
+          <div class="extra-title">Группа ГКП 2–3 года</div>
+          <div class="extra-reveal">
+            <h3>Группа ГКП 2–3 года</h3>
+            <p>2,5 часа пребывания 3 раза в неделю</p>
+            <ul>
+              <li>Погружение в Реджио-среду</li>
+              <li>Коммуникация со сверстниками</li>
+              <li>Участие в Реджио-локациях и ателье</li>
+              <li>Гармоничное бережное развитие</li>
+              <li>Игры на коммуникацию</li>
+              <li>Развитие моторики и сенсорной интеграции</li>
+              <li>Мягкая адаптация</li>
+              <li>Фруктово-овощной перекус</li>
+              <li>Мини-группа 6–7 человек</li>
+              <li>Участие в семейных мероприятиях комьюнити</li>
+            </ul>
+            <p><strong>Стоимость:</strong> 19 200₽ в месяц</p>
+          </div>
+        </article>
+
+        <article class="extra-card" data-card>
+          <div class="extra-bg" style="background-image:url('media/2-1.png')"></div>
+          <div class="extra-title">Летний городской лагерь (3–9 лет)</div>
+          <div class="extra-reveal">
+            <h3>Когда?</h3>
+            <p>С 30 мая по 31 августа</p>
+            <p><strong>Планирование деятельности на лето:</strong></p>
+            <ul>
+              <li>Лесная подготовка к настоящему походу</li>
+              <li>Съёмка фильма (режиссура, операторское, звук, актёрство)</li>
+              <li>Ярмарка для всей семьи с работами детей</li>
+              <li>Город профессий с местной валютой</li>
+              <li>Много активностей и прогулок (игры, квесты, творчество, капоэйра)</li>
+              <li>Ежедневный «Реджио-час»: проекты в микрогруппах «100 языками»</li>
+            </ul>
+            <p><strong>1 неделя:</strong> 12 000₽ (все активности, домашнее питание)</p>
+            <p><strong>1 месяц:</strong> 45 500₽</p>
+          </div>
+        </article>
+
+        <article class="extra-card" data-card>
+          <div class="extra-bg" style="background-image:url('media/parents2.jpg')"></div>
+          <div class="extra-title">Мероприятия для родителей и педагогов</div>
+          <div class="extra-reveal">
+            <p>Чтобы ВОСПИТЫВАТЬ детей, мы постоянно НАПИТЫВАЕМ себя новыми знаниями, практиками, инструментами — ведь ОБРАЗование от слова «ОБРАЗ».</p>
+            <p>Приглашаем лучших тренеров-практиков, специалистов и коучей в области психологии, отношений, образования, саморазвития. Мы образовываемся и совершенствуемся — и вы можете присоединиться.</p>
+            <p>Наши встречи — тёплые, душевные, ресурсные.</p>
+            <p><strong>Дату ближайшей встречи</strong> можно узнать по телефону.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contacts" class="contacts">
+    <div class="sep top" aria-hidden="true"></div>
+    <div class="container">
+      <div class="map-wrap">
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=37.481776%2C55.540934&z=16" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="info">
+        <h2>Контактная информация</h2>
+        <div class="info-list">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div>ул. Александры Монаховой, 94, корп. 4<br><span class="small">Понедельник – Пятница: 8:30–18:30; Суббота: 10:00–15:30</span></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 4l4 2-2 4a14 14 0 0 0 7 7l4-2 2 4c-2 2-5 3-8 2a18 18 0 0 1-7-4 18 18 0 0 1-4-7c-1-3 0-6 2-8z" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div>Контактный телефон: <a href="tel:+79161964999">+7 (916) 196-4999</a></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M21 3L3 11l6 2 2 6 3-4 5-12z" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div>Телеграм — <a href="#" target="_blank" rel="noopener">наш канал</a></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 7h4l2 4 2-4h4l-4 6 4 6h-4l-2-4-2 4H3l5-6L3 7z" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div>ВКонтакте — <a href="#" target="_blank" rel="noopener">наша группа</a></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            <div>Инстаграм — <a href="#" target="_blank" rel="noopener">наша страничка</a></div>
+          </div>
+        </div>
+        <div class="footer-line">Стихия © 2023. All Rights Reserved.</div>
+      </div>
+    </div>
+    <div class="sep bottom" aria-hidden="true"></div>
+  </section>
+
+  <script>
+    // Бургер
+    const burger = document.querySelector('.burger');
+    const mobile = document.getElementById('mobile-menu');
+    function toggleMenu(){
+      if(!mobile) return;
+      const opened = mobile.classList.toggle('open');
+      burger?.setAttribute('aria-expanded', opened);
+      mobile.hidden = !opened;
+    }
+    burger?.addEventListener('click', toggleMenu);
+
+    // Защита авто-паузы видео
+    const vid = document.querySelector('.hero video');
+    if (vid) {
+      const tryPlay = () => vid.play().catch(()=>{});
+      document.addEventListener('visibilitychange', tryPlay, {passive:true});
+      window.addEventListener('focus', tryPlay, {passive:true});
+    }
+
+    // Параллакс точек
+    const dots = Array.from(document.querySelectorAll('.photo-wrap .dot'));
+    const speeds = dots.map((_,i)=> (i%3===0? 0.25 : i%3===1? 0.4 : 0.6));
+    let ticking=false;
+    function onScroll(){
+      if(!ticking){
+        window.requestAnimationFrame(()=>{
+          const y=window.scrollY||window.pageYOffset;
+          dots.forEach((el,idx)=>{
+            const dy=Math.sin((y+idx*80)/500)*10 * speeds[idx];
+            el.style.transform=`translateY(${dy.toFixed(1)}px)`;
+          });
+          ticking=false;
+        });
+        ticking=true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // Появление карточек команды
+    const members = document.querySelectorAll('.member');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.25});
+    members.forEach(m=>io.observe(m));
+
+    // tap-to-toggle для допов на мобиле
+    document.querySelectorAll('[data-card]').forEach(card=>{
+      card.addEventListener('click', ()=> card.classList.toggle('open'));
+    });
+
+    // Плавный скролл (fallback) + закрытие меню после клика
+    document.querySelectorAll('a[href^="#"]').forEach(link=>{
+      link.addEventListener('click', e=>{
+        const id = link.getAttribute('href');
+        const target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+          if(mobile?.classList.contains('open')) toggleMenu();
+        }
+      });
+    });
+  </script>
+  <script>
+    /* ===== ПУЗЫРЬКИ: автоматическая генерация в секциях ===== */
+    (function() {
+      // В каких секциях показывать пузырьки
+      const sectionIds = ['about','life','team','prices','extras','contacts'];
+    
+      sectionIds.forEach(id => {
+        const sec = document.getElementById(id);
+        if (!sec) return;
+        sec.classList.add('has-bubbles');
+    
+        // контейнер для пузырьков (один на секцию)
+        const wrap = document.createElement('div');
+        wrap.className = 'bubbles';
+        sec.appendChild(wrap);
+    
+        // сколько пузырьков на секцию (адаптивно от ширины)
+        const base = window.innerWidth > 1200 ? 7 : window.innerWidth > 680 ? 6 : 5;
+    
+        for (let i = 0; i < base; i++) {
+          const b = document.createElement('span');
+          // случайно: кольцо или мягкая точка
+          b.className = 'bubble ' + (Math.random() < 0.55 ? 'ring' : 'soft');
+    
+          // размеры
+          const size = Math.round(10 + Math.random()*18); // 10–28px
+          b.style.width = size + 'px';
+          b.style.height = size + 'px';
+    
+          // позиция
+          const left = Math.round(Math.random() * 92) + 4;   // 4–96%
+          const top  = Math.round(Math.random() * 84) + 6;   // 6–90%
+          b.style.left = left + '%';
+          b.style.top  = top  + '%';
+    
+          // «амплитуда» и смещение по X
+          const amp = (10 + Math.random()*16) | 0; // 10–26px
+          const shift = (Math.random() < .5 ? -1 : 1) * (6 + Math.random()*14); // -20–20px
+          b.style.setProperty('--amp', amp + 'px');
+          b.style.setProperty('--shift', shift + 'px');
+    
+          // длительность и задержка
+          const dur = (9 + Math.random()*10).toFixed(1) + 's';  // 9–19s
+          const delay = (-Math.random()*dur.replace('s','')).toFixed(1) + 's'; // отриц. для «рассинхрона»
+          b.style.setProperty('--dur', dur);
+          b.style.setProperty('--delay', delay);
+    
+          wrap.appendChild(b);
+        }
+      });
+    
+      // Пересоздаём пузырьки при resize (не чаще раза в 400мс)
+      let rAF, last = 0;
+      window.addEventListener('resize', () => {
+        const now = Date.now();
+        if (now - last < 400) { cancelAnimationFrame(rAF); }
+        last = now;
+        rAF = requestAnimationFrame(() => {
+          document.querySelectorAll('.bubbles').forEach(el => el.remove());
+          sectionIds.forEach(id => {
+            const sec = document.getElementById(id);
+            if (sec) sec.classList.remove('has-bubbles'); // сброс
+          });
+          // рекурсивный перезапуск
+          (arguments.callee)();
+        });
+      });
+    })();
+    </script>
+    
+</body>
+</html>
