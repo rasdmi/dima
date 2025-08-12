@@ -113,3 +113,40 @@ document.querySelectorAll('[data-card]').forEach(card=>{
     t = setTimeout(createBubbles, 350);
   });
 })();
+// Модалка "Наша команда"
+document.querySelectorAll('.member').forEach(m => {
+  m.addEventListener('click', () => {
+    const name = m.dataset.name || '';
+    const text = m.dataset.text || '';
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+
+    const card = document.createElement('div');
+    card.className = 'modal-card';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'modal-close';
+    closeBtn.innerHTML = '&times;';
+
+    const title = document.createElement('h3');
+    title.textContent = name;
+
+    const p = document.createElement('p');
+    p.textContent = text;
+
+    card.appendChild(closeBtn);
+    card.appendChild(title);
+    card.appendChild(p);
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+
+    function close() {
+      overlay.remove();
+    }
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) close();
+    });
+    closeBtn.addEventListener('click', close);
+  });
+});

@@ -126,6 +126,40 @@ section{scroll-margin-top:90px}
 .team .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.95;margin:0 0 8px}
 .team .headline{font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 14px}
 .team .sub{font-size:14px;opacity:.95;max-width:75ch;margin:0 auto 36px}
+/* Модалка */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 90%;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  text-align: center;
+}
+.modal-card h3 {
+  margin-top: 0;
+  font-weight: 800;
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* Сетка 2 строки по 4 кружка */
 .team-list{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 20px;justify-items:center}
 @media (max-width:960px){.team-list{grid-template-columns:repeat(2,1fr)}}
