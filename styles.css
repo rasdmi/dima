@@ -333,7 +333,6 @@ html { scroll-behavior: smooth; }
 .whatsapp-link{
   display:flex; align-items:center; justify-content:center;
   width:40px; height:40px; border-radius:8px;
-  background:#25D366;
   flex:0 0 auto;
 }
 .whatsapp-link .icon{
