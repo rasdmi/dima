@@ -329,3 +329,18 @@ html { scroll-behavior: smooth; }
   height: 22px;
   display: block;
 }
+/* === WhatsApp button === */
+.whatsapp-link{
+  display:flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:8px;
+  background:#25D366;
+  flex:0 0 auto;
+}
+.whatsapp-link .icon{
+  width:22px; height:22px; display:block;
+}
+
+/* внутри мобильного меню — делаем кнопку пошире и дружелюбней для тача */
+.mobile-menu .whatsapp-link{
+  width:48px; height:48px; border-radius:10px;
+}
