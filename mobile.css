@@ -186,3 +186,17 @@
   .brand img.icon { width: 104px; height: 54px; }
   .brand img.wordmark { height: 22px; }
 }
+/* --- WhatsApp: показать в шапке на мобилках и ужать отступы --- */
+@media (max-width: 880px){
+  .top-band .whatsapp-link { 
+    display: flex !important;      /* было none */
+  }
+  .top-band .nav { gap: 8px; }
+  .brand { min-width: 0; flex: 0 1 auto; }
+  .brand img.icon { width: 120px; height: 62px; object-fit: contain; }
+  .brand img.wordmark { height: 26px; width: auto; }
+}
+@media (max-width: 360px){
+  .brand img.icon { width: 104px; height: 54px; }
+  .brand img.wordmark { height: 22px; }
+}
