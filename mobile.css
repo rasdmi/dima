@@ -163,3 +163,25 @@
 /* ---------- Якорь контактов (чтобы не приземлялось на карту) ---------- */
 /* Сработает, если в HTML у блока контактов есть id="contact-info" */
 #contact-info { scroll-margin-top: 90px; }
+
+/* ---------- ШАПКА: фикс наложения логотипа и иконки WhatsApp ---------- */
+/* делаем шапку компактнее и прячем WA-иконку на телефонах */
+.top-band .nav { gap: 10px; }
+
+@media (max-width: 960px){
+  .brand img.icon { width: 140px; height: 72px; object-fit: contain; }
+  .brand img.wordmark { height: 32px; width: auto; }
+}
+
+@media (max-width: 880px){
+  /* самый надёжный фикс: прячем WA-иконку сверху, оставляем её в мобильном меню */
+  .top-band .whatsapp-link { display: none !important; }
+
+  /* чуть сжимаем логотип */
+  .brand img.icon { width: 120px; height: 62px; }
+  .brand img.wordmark { height: 26px; }
+}
+
+@media (max-width: 360px){
+  .brand img.icon { width: 104px; height: 54px; }
+}
