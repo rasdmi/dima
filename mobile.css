@@ -95,7 +95,14 @@
   .semis .semi{ width: 150px; height: 75px; }
   .semis .semi.second{ width: 180px; height: 90px; }
 }
-/* --- Prices: мобильные фиксы кнопки и карточек --- */
+
+/* ---------- ЦЕНЫ (Prices) ---------- */
+/* планшеты: две колонки, помягче отступы */
+@media (max-width: 1050px){
+  .price-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
+
+/* телефоны: одна колонка, кнопка всегда влезает и растягивается */
 @media (max-width: 600px){
   .prices { padding: 80px 0 100px; }
   .price-panel { padding: 22px 16px 26px; }
