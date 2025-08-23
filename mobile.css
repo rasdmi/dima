@@ -142,3 +142,28 @@
     padding: 0 14px;
   }
 }
+/* --- Prices: Safari/iPhone stretch fix --- */
+@media (max-width: 600px){
+  /* пусть контент в карточке занимает всю колонку */
+  .tariff .body{
+    grid-template-columns: 1fr;
+    justify-items: stretch;   /* вместо center */
+    align-items: start;
+  }
+
+  /* сама кнопка растягивается по ширине колонки grid */
+  .btn-enroll{
+    justify-self: stretch;    /* ключ для grid-ячейки */
+    display: inline-flex;     /* как было, но не обязательно */
+    text-align: center;
+  }
+
+  /* доп. уплотнение, если всё ещё тесно на 320px ширине */
+  .tariff { border-radius: 14px; }
+  .tariff .body{ padding: 20px 16px 16px; gap: 12px; }
+  .btn-enroll{ min-height: 46px; padding: 0 14px; font-size: 14.5px; }
+}
+
+@media (max-width: 360px){
+  .btn-enroll{ min-height: 44px; font-size: 14px; padding: 0 12px; }
+}
