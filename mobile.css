@@ -102,7 +102,7 @@
   .price-grid { grid-template-columns: 1fr; gap: 14px; }
 
   .tariff{
-    min-height: unset;         /* пусть растёт по контенту */
+    min-height: unset;         /* растёт по контенту */
     border-radius: 16px;
   }
   .tariff .head{
@@ -113,10 +113,16 @@
   .tariff .body{
     padding: 24px 18px 18px;
     gap: 14px;
+
+    /* ключевой фикс для iPhone/Safari: растягиваем элементы grid */
+    grid-template-columns: 1fr;
+    justify-items: stretch;    /* вместо center */
+    align-items: start;
   }
 
-  /* кнопка "Записаться" — всегда влезает */
+  /* кнопка "Записаться" — занимает всю ширину колонки */
   .btn-enroll{
+    justify-self: stretch;     /* растягивание в grid */
     width: 100%;
     max-width: 100%;
     min-height: 48px;
@@ -126,44 +132,27 @@
     white-space: normal;       /* разрешаем перенос */
     word-break: break-word;
     box-sizing: border-box;
-  }
-
-  /* Чуть компактнее типографика, чтобы всё дышало */
-  .price{ font-size: clamp(24px, 6vw, 32px); }
-  .period{ font-size: 12px; }
-  .desc{ font-size: 14px; }
-  .tariff--featured{ transform: none; } /* без поднятия на мобиле */
-}
-
-@media (max-width: 360px){
-  .btn-enroll{
-    min-height: 44px;
-    font-size: 14px;
-    padding: 0 14px;
-  }
-}
-/* --- Prices: Safari/iPhone stretch fix --- */
-@media (max-width: 600px){
-  /* пусть контент в карточке занимает всю колонку */
-  .tariff .body{
-    grid-template-columns: 1fr;
-    justify-items: stretch;   /* вместо center */
-    align-items: start;
-  }
-
-  /* сама кнопка растягивается по ширине колонки grid */
-  .btn-enroll{
-    justify-self: stretch;    /* ключ для grid-ячейки */
-    display: inline-flex;     /* как было, но не обязательно */
     text-align: center;
   }
 
-  /* доп. уплотнение, если всё ещё тесно на 320px ширине */
-  .tariff { border-radius: 14px; }
-  .tariff .body{ padding: 20px 16px 16px; gap: 12px; }
-  .btn-enroll{ min-height: 46px; padding: 0 14px; font-size: 14.5px; }
+  /* Чуть компактнее типографика */
+  .price{ font-size: clamp(24px, 6vw, 32px); }
+  .period{ font-size: 12px; }
+  .desc{ font-size: 14px; }
+
+  /* не поднимаем карточку на мобиле */
+  .tariff--featured{ transform: none; }
 }
 
 @media (max-width: 360px){
-  .btn-enroll{ min-height: 44px; font-size: 14px; padding: 0 12px; }
+  .tariff .body{ padding: 20px 16px 16px; gap: 12px; }
+  .btn-enroll{
+    min-height: 44px;
+    font-size: 14px;
+    padding: 0 12px;
+  }
 }
+
+/* ---------- Якорь контактов (чтобы не приземлялось на карту) ---------- */
+/* Сработает, если в HTML у блока контактов есть id="contact-info" */
+#contact-info { scroll-margin-top: 90px; }
