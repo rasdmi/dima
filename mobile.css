@@ -184,4 +184,5 @@
 
 @media (max-width: 360px){
   .brand img.icon { width: 104px; height: 54px; }
+  .brand img.wordmark { height: 22px; }
 }
