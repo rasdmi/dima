@@ -95,3 +95,50 @@
   .semis .semi{ width: 150px; height: 75px; }
   .semis .semi.second{ width: 180px; height: 90px; }
 }
+/* --- Prices: мобильные фиксы кнопки и карточек --- */
+@media (max-width: 600px){
+  .prices { padding: 80px 0 100px; }
+  .price-panel { padding: 22px 16px 26px; }
+  .price-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  .tariff{
+    min-height: unset;         /* пусть растёт по контенту */
+    border-radius: 16px;
+  }
+  .tariff .head{
+    padding: 16px 12px;
+    font-size: 12px;
+    letter-spacing: .12em;
+  }
+  .tariff .body{
+    padding: 24px 18px 18px;
+    gap: 14px;
+  }
+
+  /* кнопка "Записаться" — всегда влезает */
+  .btn-enroll{
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    padding: 0 18px;
+    font-size: 15px;
+    line-height: 1.15;
+    white-space: normal;       /* разрешаем перенос */
+    word-break: break-word;
+    box-sizing: border-box;
+  }
+
+  /* Чуть компактнее типографика, чтобы всё дышало */
+  .price{ font-size: clamp(24px, 6vw, 32px); }
+  .period{ font-size: 12px; }
+  .desc{ font-size: 14px; }
+  .tariff--featured{ transform: none; } /* без поднятия на мобиле */
+}
+
+@media (max-width: 360px){
+  .btn-enroll{
+    min-height: 44px;
+    font-size: 14px;
+    padding: 0 14px;
+  }
+}
