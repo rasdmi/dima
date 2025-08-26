@@ -346,3 +346,13 @@ html { scroll-behavior: smooth; }
 @media (max-width: 960px){
   .whatsapp-link img{ width: 24px; height: 24px; }
 }
+/* --- TOP NAV: порядок и размеры WhatsApp --- */
+.top-band .nav { display: flex; align-items: center; }
+.brand { order: 1; }
+.whatsapp-link { order: 2; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; }
+.whatsapp-link:hover { background: rgba(0,0,0,.05); }
+.spacer { order: 3; flex: 1; }
+.nav-links { order: 4; }
+.burger { order: 5; }
+
+.whatsapp-link .icon { width: 24px; height: 24px; display: block; }
