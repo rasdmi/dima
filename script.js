@@ -75,7 +75,13 @@
     if (!a) return;
     closeMenu();
   });
-
+  document.querySelectorAll('a[href="#contacts"]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      document.getElementById('contact-info')?.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  
   // ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu?.classList.contains(OPEN_CLASS)) {
